@@ -32,6 +32,7 @@ export function SignIn(){
                         actionTextDescription={"Don't have an account?"}
                         authButtonText={'Log in'}
                         outlineAuthButtonText={'Sign in with google'}
+                        navigateFunction={()=>navigate('/market/home')}
                     />
                 </div>
             </div>

@@ -10,28 +10,34 @@ import {ReactComponent as Home} from '../../../assets/Home3.svg';
 import {ReactComponent as Category} from '../../../assets/Category.svg';
 import { BottomNavi } from "../../../components/bottomNavi";
 import '../../../css/user.css';
+import { useNavigate } from "react-router-dom";
 
 export function MarketHome(){
+    const navigate = useNavigate();
     const [trendingData, setTrandingData] = useState([1,2,3,4,54,5,6,7,3,3]);
     const iconTextArray =[
         {
             icon:Home,
             text:"Home",
-            link:"/market/home"
+            link:"/market/home",
+            isActive:true
         },
         {
             icon:Category,
             text:"Shop",
-            link:"/market/shop"
+            link:"/market/shop",
+            isActive:false
         },
         {
             icon:Category,
             text:"Collection",
-            link:"/collection"
+            link:"/collection",
+            isActive:false
         },
         {
             icon:Profile,
-            text:"Community"
+            text:"Community",
+            isActive:false
         },
     ]
     const imagesArray = [image1, image2, trending1, trending2, trending3,trending2, trending3, trending2];
@@ -43,8 +49,8 @@ export function MarketHome(){
                 <p>Good afternoon, welcome back</p>
             </div>
             <div className="home-cart-profile-pic-container">
-                <ShoppingBagOutlined/>
-                <p>BO</p>
+                <div onClick={()=>navigate('/market/cart')}><ShoppingBagOutlined/></div>
+                <p onClick={()=>navigate('/profile/blessed')}>BO</p>
             </div>
         </div>
         <div className="home-body-container">
@@ -57,15 +63,15 @@ export function MarketHome(){
                 trendingData.map((value, index)=> <div className="home-image-item-container" key={index}>
                     <div>
                         <img alt="artwork"  src={trending1}/>
-                        <p className="active">view in shop</p>
+                        <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
                     </div>
                     <div>
                         <img alt="artwork"  src={trending2}/>
-                        <p className="active">view in shop</p>
+                        <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
                     </div>
                     <div>   
                         <img alt="artwork"  src={trending3}/>
-                        <p className="active">view in shop</p>
+                        <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
                     </div>
                 </div>)
             }
@@ -84,7 +90,7 @@ export function MarketHome(){
         </div>
     </div>
         
-        <div className="home-footer-container">
+        <div className="shop-footer-container">
             <BottomNavi imageTextObjectArray={iconTextArray}/>
         </div>
 

@@ -2,7 +2,7 @@ export function CardInput(){
     return <div className="cardInput-main-container home-page-body">
                 <div className="" style={{ marginTop:20,
                 marginBottom:10}}>
-                    <h1>Make Payment</h1>
+                    <h2>Make Payment</h2>
                 </div>
                 
                 <div className="cardInput-top">
@@ -26,7 +26,7 @@ export function CardInput(){
             </div>
             <div className="add-to-cart-button-container">
                 <button>Continue</button>
-        </div>
+            </div>
         
     </div>
 }

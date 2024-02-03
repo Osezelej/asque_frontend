@@ -2,14 +2,18 @@ import image1 from '../../../assets/image1.png';
 import image2 from '../../../assets/image2.png';
 import Delete from '../../../assets/delete.png';
 import { Quantity } from '../../../components/quantity';
+import { useNavigate } from 'react-router-dom';
 
 
 export function Checkout(){
+    const navigate = useNavigate();
     
     const cartDetail = [image1, image2, image1, image2]
     return <div className="checkout-main-container home-page-body">
-        <div className="shop-header-container">
-            <h1>Checkout</h1>
+        <div className="shop-header-container" style={{
+            minHeight:90
+        }}>
+            <h2>Checkout</h2>
         </div>
         <div className="order-item-container">
             {cartDetail.map((value)=><div className="cartDetail-item-container">
@@ -55,7 +59,7 @@ export function Checkout(){
                 </div>
             </div>
             <div className="add-to-cart-button-container">
-            <button>Proceed</button>
+            <button onClick={()=>navigate('/market/checkout')}>Proceed</button>
         </div>
         </div>
         

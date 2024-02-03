@@ -14,6 +14,11 @@ import { CardInput } from './pages/user/commerce/cardinput';
 import { Album } from './pages/user/collection/album';
 import { AlbumDesc } from './pages/user/collection/albumDesc';
 import { StoryDesc } from './pages/user/collection/StoryDesc';
+import { Profile } from './pages/profile/profile';
+import { Referal } from './pages/user/userProfileItems/referal';
+import { Support } from './pages/user/userProfileItems/support';
+import { AdminHome} from './pages/admin/home';
+import { CreatorHome } from './pages/creator/Home';
 
 function App() {
   return (
@@ -34,6 +39,11 @@ function App() {
         <Route path='/collection' element={<Album/>}/>
         <Route path='/collection/:id' element={<AlbumDesc/>}/>
         <Route path='/collection/story/:id' element={<StoryDesc/>}/>
+        <Route path='/profile/:user' element={<Profile/>} />
+        <Route path='/referal/:user' element={<Referal/>}/>
+        <Route path='/support' element={<Support/>}/>
+        <Route path='/admin/' element={<AdminHome/>}/>
+        <Route path='/creator/home' element={<CreatorHome/>}/>
       </Routes>
     </BrowserRouter>);
 }

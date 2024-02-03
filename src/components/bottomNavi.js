@@ -6,7 +6,8 @@ export function BottomNavi({imageTextObjectArray}){
         {imageTextObjectArray.map((value)=><BottomNaviIconText 
         Icon={value.icon}
         text={value.text} 
-            link={value.link}
+        link={value.link}
+        isActive={value.isActive}
         />)}
     </div>
 }

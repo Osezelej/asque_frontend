@@ -8,28 +8,34 @@ import {ReactComponent as Bag} from '../../../assets/Bag 6.svg';
 import {ReactComponent as Communication} from '../../../assets/communication.svg';
 import share from '../../../assets/Share.png';
 import { SearchRounded, ShoppingBagOutlined } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 export function Shop(){
+    const navigate = useNavigate()
     let imagesArray = [image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2]
     const iconTextArray =[
         {
             icon:Home,
             text:"Home",
-            link:"/market/home"
+            link:"/market/home",
+            isActive:false
         },
         {
             icon:Category,
             text:"Shop",
-            link:"/market/shop"
+            link:"/market/shop",
+            isActive:true
         },
         {
             icon:Category,
             text:"Collection",
-            link:"/collection"
+            link:"/collection",
+            isActive:false
         },
         {
             icon:Profile,
-            text:"Community"
+            text:"Community",
+            isActive:false
         },
     ]
 
@@ -37,7 +43,7 @@ export function Shop(){
         <div style={{overflowY:'scroll'}}>
 
             <div className="shop-header-container">
-                <div className="basket-section">
+                <div className="basket-section" onClick={()=>navigate('/market/cart')}>
                     <ShoppingBagOutlined/>
                 </div>
                 <div className="page-name-search-section">
@@ -54,8 +60,8 @@ export function Shop(){
             
             <div className="shop-body-container">
                 {
-                    imagesArray.map((value, index)=><div className='shop-body-content-item-container' key={index}>
-                            <div className='image-section'>
+                    imagesArray.map((value, index)=><div className='shop-body-content-item-container' key={index} >
+                            <div className='image-section' onClick={()=>navigate('/market/detail/artwork')}>
                                 <img src={value} alt='photo'/>
                             </div>
                             <div className='item-name-text-price-container'>

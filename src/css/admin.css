@@ -1,0 +1,16 @@
+.admin-navigation-header{
+    display: flex;
+    padding:  30px 10px 16px ;
+    justify-content: space-between;
+}
+.modal-icon-container{
+    box-shadow: 1px 1px 5px rgba(128, 128, 128, 0.529);
+    border-radius: 50px;
+    bottom: 30px;
+    background-color: white;
+}
+.modal-action-button-container{
+    border-top-color: rgba(226, 226, 226, 0.62);
+    border-top-style: solid;
+    border-top-width: 1px;
+}

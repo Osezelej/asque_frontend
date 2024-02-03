@@ -3,6 +3,7 @@
     padding: 0;
     font-family: 'Inter', sans-serif;
     color: #353F50;
+    transition: 300ms;
 
 }
 body{

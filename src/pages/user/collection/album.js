@@ -8,6 +8,7 @@ import {ReactComponent as Home} from '../../../assets/Home3.svg';
 import {ReactComponent as Category} from '../../../assets/Category.svg';
 import { BottomNavi } from "../../../components/bottomNavi";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Album(){
     const imageArray = [image1, image2, trending1, trending2, trending3]
@@ -15,26 +16,32 @@ export function Album(){
         {
             icon:Home,
             text:"Home",
-            link:"/market/home"
+            link:"/market/home",
+            isActive:false
         },
         {
             icon:Category,
             text:"Shop",
-            link:"/market/shop"
+            link:"/market/shop",
+            isActive:false
         },
         {
             icon:Category,
             text:"Collection",
-            link:"/collection"
+            link:"/collection",
+            isActive:true
         },
         {
             icon:Profile,
-            text:"Community"
+            text:"Community",
+            isActive:false
         },
     ]
+    
     const [isStory, setIsStory] = useState(false);
+    const navigate = useNavigate()
     return <div className="collection-main-page home-page-body">
-                <div style={{overflowY:'scroll', marginBottom:70}}>
+                <div style={{overflowY:'scroll', marginBottom:0}}>
                         <div className="collection-main-header">
                             <div className="menu-title">
                                 {!isStory ? <p onClick={()=>setIsStory(false)} style={{
@@ -58,10 +65,10 @@ export function Album(){
                             </div>
                         </div>
                        {!isStory && <div className='collention-body'>
-                            {imageArray.map((value)=><div className='collection-item-container'>
+                            {imageArray.map((value)=><div className='collection-item-container' >
                                 <div className='title-link-container'>
                                     <p className='title'>Otedola's Bridge</p>
-                                    <p className='active'>View</p>
+                                    <p className='active' onClick={()=>navigate('/collection/123')}>View</p>
                                 </div>
                                 <div className='image-container'>
                                     <img src={value} />
@@ -69,7 +76,7 @@ export function Album(){
                             </div>)}
                         </div>} 
                        {isStory && <div className='Stories-body-container'>
-                            {imageArray.map((value)=><div className='stories-item-container'>
+                            {imageArray.map((value)=><div className='stories-item-container' onClick={()=>navigate('/collection/story/123')}>
                                 <div className='text-container'>
                                     <p className='title'>Kanuri Castle</p>
                                     <p style={{fontSize:14, width:251}}>Lets make your comfort zone memorable, Order for a product Above 50,000 naira and get a free Shipping. </p>
@@ -82,7 +89,7 @@ export function Album(){
 
                 </div>
 
-                <div className="home-footer-container">
+                <div className="shop-footer-container">
                     <BottomNavi imageTextObjectArray={iconTextArray}/>
                 </div>
             

@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom"
+
 export function CheckoutSummary(){
+    const navigate = useNavigate()
     return <div className="checkout-summary-main-container home-page-body">
         <div className="" style={{ marginTop:20,
         marginBottom:10}}>
-            <h1>Checkout</h1>
+            <h2>Checkout</h2>
         </div>
 
          <div className='address-summary-container'>
@@ -33,7 +36,7 @@ export function CheckoutSummary(){
                 </div>
             </div>
             <div className="add-to-cart-button-container">
-            <button>Make Payment</button>
+            <button onClick={()=>navigate('/market/pay/300')}>Make Payment</button>
         </div>
         </div>
     </div>
