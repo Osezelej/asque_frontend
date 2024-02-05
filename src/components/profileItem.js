@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import arrowDown from '../assets/arrow-down-sign-to-navigate.png';
 import { useState } from "react";
 
-export function ProfileItem({LeadingIcon, textTitle, subTextTitle, link, from, isArtwork}){
+export function ProfileItem({LeadingIcon, textTitle, subTextTitle, link, from, isArtwork, handleClick}){
     const [click, setClick] = useState(false);
     const navigate = useNavigate();
     return (from != 'creator' ? <div className="Profile-item-container"   onClick={()=>{
@@ -39,11 +39,11 @@ export function ProfileItem({LeadingIcon, textTitle, subTextTitle, link, from, i
     </div>
     {
             click && <div>
-                <p style={{marginBottom:10,fontWeight:'bold'}}>Album</p>
-                <p style={{ fontWeight:'bold'}}>For sale</p>
+                <p style={{marginBottom:10,fontWeight:'bold'}} onClick={()=>navigate('/creator/submit/album')}>Album</p>
+                <p style={{ fontWeight:'bold'}} onClick={()=>navigate('/creator/submit/artwort')}>For sale</p>
             </div>
         }
-    </div> : <div className="Profile-item-container" >
+    </div> : <div className="Profile-item-container" onClick={()=>handleClick()}>
         <div className="icon-text-container">
             <div className="icon-container">
                 <img src={LeadingIcon} />

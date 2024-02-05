@@ -19,6 +19,10 @@ import { Referal } from './pages/user/userProfileItems/referal';
 import { Support } from './pages/user/userProfileItems/support';
 import { AdminHome} from './pages/admin/home';
 import { CreatorHome } from './pages/creator/Home';
+import { CreatorAlbum } from './pages/creator/creatorAlbumPage';
+import { CreatorSale } from './pages/creator/creatorSalePage';
+import { CreateStories } from './pages/creator/createStories';
+import { ViewedPublished } from './pages/creator/viewPublished';
 
 function App() {
   return (
@@ -44,6 +48,10 @@ function App() {
         <Route path='/support' element={<Support/>}/>
         <Route path='/admin/' element={<AdminHome/>}/>
         <Route path='/creator/home' element={<CreatorHome/>}/>
+        <Route path='/creator/submit/album' element={<CreatorAlbum/>}/>
+        <Route path='/creator/submit/artwort' element={<CreatorSale/>}/>
+        <Route path='/creator/submit/story' element={<CreateStories/>}/>
+        <Route path='/creator/published' element={<ViewedPublished/>}/>
       </Routes>
     </BrowserRouter>);
 }

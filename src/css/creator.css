@@ -1,0 +1,79 @@
+.creator-detail-item-container{
+    height: 100vh;
+}
+.add-to-cart-button-body{
+    position: fixed;
+    bottom: 0;
+    width: 92%;
+    background-color: white;
+}
+.creator-input-div {
+    display: flex;
+    padding: 0 10px;
+    height: 45px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: #353F50;
+    border-style: solid;
+    margin:  0 10px;
+
+}
+.creator-input-div p{
+    color: #a5a5a5;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.creator-input-image-container{
+    padding: 5px 10px;
+    background-color: #F3F5F6;
+    border-radius: 6px;
+}
+
+.bottom-drawer-main-body{
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    background-color: white;
+}
+.drawer-title-header-close-container{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.drawer-title-header-container{
+    width:90%;
+    display: flex;
+    justify-content: center;
+}
+.drawer-title-header-container p{
+    font-weight: bold;
+}
+.close-conainer{
+    padding: 3.5px 5px;
+    background-color:#F3F5F6;
+    border-radius: 6px;
+    
+}
+.checkbox-container{
+    display: flex;
+    column-gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.checkbox-container input[type="checkbox"] {
+    border-color: #BE774D;
+    border-style: solid;
+    border-width: 1px;
+
+}
+.checkbox-container input[type="checkbox"]:checked {
+    background-color: #BE774D;
+}
+.number-available-input-div{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}

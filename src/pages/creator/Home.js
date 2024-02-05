@@ -2,6 +2,11 @@ import { useNavigate } from "react-router-dom"
 import book from '../../assets/book.png';
 import camera from '../../assets/Camera 2.png';
 import { ProfileItem } from "../../components/profileItem";
+import {ReactComponent as Profile} from '../../assets/Profile 1.svg';
+import {ReactComponent as Category} from '../../assets/Category.svg';
+import { BottomNavi } from "../../components/bottomNavi";
+import '../../css/creator.css';
+
 export function CreatorHome(){
 
     const navigate = useNavigate();
@@ -18,11 +23,32 @@ export function CreatorHome(){
             leadingIcon:book,
             title:'Stories',
             subText:'A global audience is eager to know, share thoughts',
-            link:'',
+            link:'/creator/submit/story',
             from:'creator',
             isArtwork:false
         },
       
+    ]
+    const iconTextArray =[
+
+        {
+            icon:Category,
+            text:"Create",
+            link:"/creator/home",
+            isActive:true
+        },
+        {
+            icon:Category,
+            text:"View published",
+            link:"/creator/published",
+            isActive:false
+        },
+        {
+            icon:Profile,
+            text:"Profile",
+            link:"/profile/creator",
+            isActive:false
+        },
     ]
 
     return <div className="creator-home-main-body home-page-body">
@@ -48,9 +74,13 @@ export function CreatorHome(){
                     link={value.link}
                     from = {value.from}
                     isArtwork={value.isArtwork}
+                    handleClick={()=>navigate('/creator/submit/story')}
                 />)
             }
             </div>
+        </div>
+        <div className="shop-footer-container">
+            <BottomNavi imageTextObjectArray={iconTextArray}/>
         </div>
 
     </div>

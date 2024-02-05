@@ -111,9 +111,7 @@ export function AdminHome(){
                     <h3>Blessed</h3>
                     <p>Good afternoon, welcome back</p>
                 </div>
-                <div className="home-cart-profile-pic-container">
-                    <p>BO</p>
-                </div>
+                
             </div>
             <div className="home-body-container">
             <div className="trending-artwork-container">
