@@ -37,7 +37,8 @@ export function MarketHome(){
         {
             icon:Profile,
             text:"Community",
-            isActive:false
+            isActive:false,
+            link:"/community/blessed",
         },
     ]
     const imagesArray = [image1, image2, trending1, trending2, trending3,trending2, trending3, trending2];

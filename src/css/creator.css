@@ -77,3 +77,11 @@
     justify-content: space-between;
     margin: 0 10px;
 }
+.profile-detail-item{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.profile-detail-item p:last-child{
+    font-weight: bold;
+}

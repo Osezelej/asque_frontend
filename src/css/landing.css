@@ -1,0 +1,116 @@
+.landing-header-image-signin-signup-container{
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #F2F2F2;
+    align-items: center;
+    border-radius: 8px;
+}
+.auth-button-container{
+    display: flex;
+    column-gap: 10px;
+
+
+}
+.auth-button-container button{
+   width: 75px;
+   height: 40px;
+   border-radius: 8px;
+   border-style: solid;
+   border-color: #BE774D;
+   font-weight: bold;
+}
+.auth-outline-button{
+    background-color: white;
+    color: #BE774D;
+}
+.auth-filled-button{
+    background-color: #BE774D;
+    color: white;
+}
+.company-name-desc-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 30px;
+    margin: 20px 0;
+}
+.company-name-desc-container p{
+    width:80%;
+    text-align: center;
+}
+
+.company-name-desc-container h1{
+    color: #BE774D;
+}
+
+.header-carousel-image-container{
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 20px;
+}
+.header-carousel-image-container img{
+    width: 130px;
+    border-radius: 10px;
+}
+
+.header-carousel-container{
+    margin-bottom: 40px;
+}
+.landing-image-container {
+    margin-bottom: 22px;
+}
+.landing-content-container{
+    display: flex;
+    flex-direction: column;
+    margin: 50px 0;
+}
+.preTagline-tagline-tagline-desc-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: 10px;
+}
+.preTagline-container{
+    background-color: #F2F2F2;
+    padding: 10px;
+    border-radius: 6px;
+
+}
+.tagline-title{
+    font-size: 24px;
+    font-weight: bolder;
+}
+.landing-page-bottom{
+    background-color: #111010;
+    padding: 50px 15px;
+    width: 100vw;
+}
+.footer-container-tagline{
+    width:80%;
+    
+}
+.footer-container-tagline p{
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+.contact-us-profile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin-top: 15px;
+    background-color: #1F1E1E;
+    width: 91.7%;
+    border-radius: 4px;
+}
+.contact-us-profile p{
+    color: white;
+}
+.home-body-container{
+    height: 100vh;
+}

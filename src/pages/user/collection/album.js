@@ -34,7 +34,8 @@ export function Album(){
         {
             icon:Profile,
             text:"Community",
-            isActive:false
+            isActive:false,
+            link:"/community/blessed",
         },
     ]
     
@@ -75,8 +76,8 @@ export function Album(){
                                 </div>
                             </div>)}
                         </div>} 
-                       {isStory && <div className='Stories-body-container'>
-                            {imageArray.map((value)=><div className='stories-item-container' onClick={()=>navigate('/collection/story/123')}>
+                       {isStory && <div className='Stories-body-container creator-detail-item-container '>
+                            {imageArray.map((value)=><div className='stories-item-container ' onClick={()=>navigate('/collection/story/123')}>
                                 <div className='text-container'>
                                     <p className='title'>Kanuri Castle</p>
                                     <p style={{fontSize:14, width:251}}>Lets make your comfort zone memorable, Order for a product Above 50,000 naira and get a free Shipping. </p>

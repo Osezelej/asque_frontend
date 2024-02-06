@@ -6,7 +6,7 @@ export function Profile (){
             leadingIcon:Person2Rounded,
             title:'Profile detail',
             subText:'Check your account details',
-            link:'/profile/detail'
+            link:'/profile-details'
         },
         {
             leadingIcon:Key,

@@ -23,6 +23,9 @@ import { CreatorAlbum } from './pages/creator/creatorAlbumPage';
 import { CreatorSale } from './pages/creator/creatorSalePage';
 import { CreateStories } from './pages/creator/createStories';
 import { ViewedPublished } from './pages/creator/viewPublished';
+import { ProfileDetails } from './pages/creator/profileDetails';
+import { EditProfileDetail } from './pages/creator/editProfileDetail';
+import { Community } from './pages/user/commerce/community';
 
 function App() {
   return (
@@ -43,6 +46,8 @@ function App() {
         <Route path='/collection' element={<Album/>}/>
         <Route path='/collection/:id' element={<AlbumDesc/>}/>
         <Route path='/collection/story/:id' element={<StoryDesc/>}/>
+        <Route path='/profile-details' element={<ProfileDetails/>}/>
+        <Route path='/profile-details/edit' element={<EditProfileDetail/>}/>
         <Route path='/profile/:user' element={<Profile/>} />
         <Route path='/referal/:user' element={<Referal/>}/>
         <Route path='/support' element={<Support/>}/>
@@ -52,6 +57,7 @@ function App() {
         <Route path='/creator/submit/artwort' element={<CreatorSale/>}/>
         <Route path='/creator/submit/story' element={<CreateStories/>}/>
         <Route path='/creator/published' element={<ViewedPublished/>}/>
+        <Route path='/community/:user' element={<Community/>}/>
       </Routes>
     </BrowserRouter>);
 }

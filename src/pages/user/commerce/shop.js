@@ -30,12 +30,13 @@ export function Shop(){
             icon:Category,
             text:"Collection",
             link:"/collection",
-            isActive:false
+            isActive:false,
         },
         {
             icon:Profile,
             text:"Community",
-            isActive:false
+            isActive:false,
+            link:"/community/blessed",
         },
     ]
 
