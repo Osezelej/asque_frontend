@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import {Home} from './pages/landing/landing'
 import { SignUp } from './pages/auth/signUp';
 import { SignIn } from './pages/auth/signIn';
@@ -26,13 +26,15 @@ import { ViewedPublished } from './pages/creator/viewPublished';
 import { ProfileDetails } from './pages/creator/profileDetails';
 import { EditProfileDetail } from './pages/creator/editProfileDetail';
 import { Community } from './pages/user/commerce/community';
+import { Signas } from './pages/auth/signas';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/'  element={<Home/>}/>
-        <Route path='/auth/signup' element={<SignUp/>} />
+        <Route path='/auth/signup-as' element={<Signas/>} />
+        <Route path='/auth/signup/:role' element={<SignUp/>} />
         <Route path='/auth/signin' element={<SignIn/>} />
         <Route path='/auth/resetPassword' element={<ResetPassword/>} />
         <Route path='/auth/recoverPassword' element={<RecoverPassword/>}/>

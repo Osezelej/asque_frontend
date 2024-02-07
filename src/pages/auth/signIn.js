@@ -1,13 +1,20 @@
 import { PasswordComp } from "../../components/paswordComp";
 import { BottomAuthComp } from "../../components/bottomauthcomp";
 import { useNavigate } from "react-router-dom";
+import { AuthHeader } from "../../components/authHeader";
 export function SignIn(){
     const navigate = useNavigate();
     return (
         <div  className="signup-container">
-            <div className="signUp-header">
-                <h1>Welcome Back</h1>
-            </div>
+            <div className="shop-header-container" style={{
+                        minHeight:150,
+                        padding:15
+                    }}>
+                        <AuthHeader 
+                            
+                        />
+                        <h2 style={{marginTop:15}}>Welcome back</h2>
+            </div>     
             <div className="signUp-body">
                 <div className="signup-field-container">
                     <div className="signup-label-input-container">

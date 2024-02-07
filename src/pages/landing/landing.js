@@ -53,13 +53,13 @@ export function Home(){
                 }}>
                     <div className="landing-header-image-signin-signup-container">
                         <div className="header-image-container">
-                            <img src={Africa} height={26} width={25}/>
+                            <img src={Africa} height={26} width={25} alt='africa'/>
                         </div>
                         <div className='auth-button-container'>
                             <button className='auth-outline-button' onClick={()=>navigate('/auth/signin')}>
                                 Sign in
                             </button>
-                            <button className='auth-filled-button' onClick={()=>navigate('/auth/signup')}>
+                            <button className='auth-filled-button' onClick={()=>navigate('/auth/signup-as')}>
                                 Sign up
                             </button>
                         </div>
@@ -73,9 +73,9 @@ export function Home(){
                     <div className='header-carousel-container'>
                         <Carousel>
                             { imageArray.map((value)=><div className='header-carousel-image-container'>
-                                <img src={image4}/>
-                                <img src={image3}/>
-                                <img src={image2}/>
+                                <img src={image4} alt='carousel1'/>
+                                <img src={image3} alt='carousel2'/>
+                                <img src={image2} alt='carousel3'/>
                             </div>)}
                         </Carousel>
                     </div>
@@ -84,7 +84,7 @@ export function Home(){
                     {
                         landingArray.map((value, key)=><div className='landing-content-container' key={key}>
                             <div className='landing-image-container'>
-                                <img src={value.image}/>
+                                <img src={value.image} alt=''/>
                             </div>
                             <div className='preTagline-tagline-tagline-desc-container'>
                                 <div className='preTagline-container'>
