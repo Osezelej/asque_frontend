@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
 
 export function ProfileDetails (){
     const navigate = useNavigate();
+    const profileState = useSelector(state=>state.user.profile);
     return <div className="profile-detail-main-container home-page-body">
         <div style={{overflowY:'scroll'}}>
             <div className="shop-header-container" style={{
@@ -14,15 +16,15 @@ export function ProfileDetails (){
                 <div className="profile-details-item-container">
                     <div className="profile-detail-item">
                         <p>Name</p>
-                        <p>Blessed chinedu</p>
+                        <p>{profileState.name}</p>
                     </div>
                     <div className="profile-detail-item">
                         <p>Brief bio</p>
-                        <p>i am a local art curator</p>
+                        <p>{profileState.briefBio}</p>
                     </div>
                     <div className="profile-detail-item">
                         <p>Website link</p>
-                        <p><a>localcurator.com</a></p>
+                        <p><a>{profileState.websiteUrl}</a></p>
                     </div>
                     <div className="profile-detail-item">
                         <p>Social media handle</p>
@@ -31,9 +33,9 @@ export function ProfileDetails (){
                     <div className="profile-detail-item">
                         <p>Bank account details</p>
                         <div>
-                            <p>0110010101</p>
-                            <p>Blessed chinedu</p>
-                            <p>Access bank</p>
+                            <p>{profileState.accountNumber}</p>
+                            <p>{profileState.accountName}</p>
+                            <p>{profileState.bank}</p>
                         </div>
                     </div>
                 </div>

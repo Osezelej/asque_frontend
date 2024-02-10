@@ -1,10 +1,13 @@
 import GoogleIcon from '../assets/google.png';
 import { useNavigate } from 'react-router-dom';
-export function BottomAuthComp({navigateFunction,actionTextDescription,actionText, authButtonText, outlineAuthButtonText}){
+import { ClipLoader } from 'react-spinners';
+
+export function BottomAuthComp({activityIndicator,navigateFunction,actionTextDescription,actionText, authButtonText, outlineAuthButtonText}){
+    
     const navigate = useNavigate()
     return <div className="bottom-comp-container">
         <button className="auth-button" onClick={()=>navigateFunction()}>
-                {authButtonText}
+                {activityIndicator ? <ClipLoader color='white' size={25}/> :authButtonText}
         </button>
         <button className="outline-auth-button-container" style={{
             display:'flex',

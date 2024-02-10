@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import arrowDown from '../assets/arrow-down-sign-to-navigate.png';
 import { useState } from "react";
 
-export function ProfileItem({LeadingIcon, textTitle, subTextTitle, link, from, isArtwork, handleClick}){
+export function ProfileItem({role, LeadingIcon, textTitle, subTextTitle, link, from, isArtwork, handleClick}){
     const [click, setClick] = useState(false);
     const navigate = useNavigate();
     return (from != 'creator' ? <div className="Profile-item-container"   onClick={()=>{

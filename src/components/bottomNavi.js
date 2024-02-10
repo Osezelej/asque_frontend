@@ -8,6 +8,7 @@ export function BottomNavi({imageTextObjectArray}){
         text={value.text} 
         link={value.link}
         isActive={value.isActive}
+        key={value.text}
         />)}
     </div>
 }

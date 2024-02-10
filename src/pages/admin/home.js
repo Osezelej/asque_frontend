@@ -8,10 +8,10 @@ import {ReactComponent as Home} from '../../assets/Home3.svg';
 import {ReactComponent as Category} from '../../assets/Category.svg';
 import { useState } from 'react';
 import { SearchRounded } from '@mui/icons-material';
-import share from '../../assets/Share.png';
 import '../../css/admin.css'
 import { Modal } from '@mui/material';
 import ModalIcon from '../../assets/unsuccess.png';
+import { ErrorDialogComp } from '../../components/errorDialogComp';
 
 export function AdminHome(){
     const [trendingData, setTrandingData] = useState([1,2,3,4,54,5,6,7,3,3]);
@@ -44,67 +44,20 @@ export function AdminHome(){
         stories:false,
     });
     let [openModal, setOpenModal] = useState(false)
-    return <div className="home-page-body">
-    <Modal open={openModal} onClose={()=>setOpenModal(false)}>
-    <div style={{
-        height:'100%',
-        width:'100%',
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center'
-    }}>
-        <div style={{
-            backgroundColor:'white',
-            width:'350px',
-            height:'220px',
-            borderRadius:15,
-            display:'flex',
-            flexDirection:'column',
-            alignItems:'center',
-            justifyContent:'space-between'
-        }}>
-            <div className='modal-icon-container' style={{
-                position:'relative',
-                padding:15,
-                }}>
-                <img src={ModalIcon} />
-            </div>
-            <div className='modal-content-container' style={{
-                display:"flex",
-                flexDirection:'column',
-                alignItems:'center',
-                justifyContent:'center',
-                columnGap:15
-            }}>
-                <h3>Confirm Delete</h3>
-                <p style={{
-                    textAlign:'center'
-                }}>
-                    Are you sure you want to delete <b>Kanuri castle?</b>
-                </p>
-            </div>
-            <div className='modal-action-button-container' style={{
-                display:'flex',
-                justifyContent:'space-evenly',
-                width:'100%',
-                height:60,
-                alignItems:'center',
-                fontWeight:900
-                }}>
-                <div className='modal-action-button'>
-                    <p onClick={()=>setOpenModal(false)}>
-                        No,back
-                    </p>
-                </div>
-                <div className='modal-action-button'>
-                    <p style={{color:'black'}} onClick={()=>setOpenModal(false)}>Yes</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    function handleModalState(){
         
-    </Modal>
+    }
+    return <div className="home-page-body">
+    <ErrorDialogComp 
+        content={"Are you sure you want to delete"} 
+        title={"Confirm delete"}
+        commands={["No,back", "Yes"]}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        contentKeyword={"Kanuri castle?"}
+        type={'warning'}
+    />
+   
         <div style={{overflowY:'scroll'}}>
             <div className="home-header-container ">
                 <div className="home-name-greeting-container">
