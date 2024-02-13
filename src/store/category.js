@@ -13,10 +13,13 @@ const categorySlice = createSlice({
             state.category = state.category.filter((value)=>{
                return value !== payload
             });
+        },
+        resetCategory(state, {payload}){
+            state.category = []
         }
     }
 })
 
 const categoryReducer = categorySlice.reducer;
-export const {addCategory, removeCategory} = categorySlice.actions;
+export const {addCategory, removeCategory, resetCategory} = categorySlice.actions;
 export default categoryReducer;

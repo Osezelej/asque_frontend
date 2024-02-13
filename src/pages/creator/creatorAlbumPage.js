@@ -1,18 +1,21 @@
 import link from '../../assets/link.png';
 import downArrow from '../../assets/downArrow.png';
 import { CategoryDrawer } from '../../components/categoryDrawer';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "@mui/material";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ErrorDialogComp } from '../../components/errorDialogComp';
 import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
 import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY } from '../../config';
-import { upload } from '@testing-library/user-event/dist/upload';
+import { resetCategory } from '../../store/category';
 
 export function CreatorAlbum(){
     const categoryState = useSelector(state=>state.category.category)
-
+    const dispath = useDispatch()
+    useEffect(()=>{
+        dispath(resetCategory())
+    }, [])
     const [activityIndicator, setActivityIndicator] = useState(false)
     const [openDrawerState, setOpenDrawerState]= useState(false);
     const [openModal, setOpenModal] = useState(false)
@@ -64,7 +67,7 @@ export function CreatorAlbum(){
             title: albumData.title,
             category:data,
             description:albumData.attachText,
-            albumImageUris:JSON.stringify(filePath)
+            albumImageUris:filePath
         }, {
             headers:{
                 Authorization:`Bearer ${accessToken}`
