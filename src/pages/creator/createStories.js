@@ -51,7 +51,7 @@ export function CreateStories(){
         setActivityIndicator(true)
             try{
                 UploadImages().then((value)=>{
-                    uploadData().then((value)=>{
+                    uploadData(value).then((value)=>{
 
                     })
                 }).finally(()=>{
@@ -72,7 +72,7 @@ export function CreateStories(){
 
     }
 
-    async function uploadData(){
+    async function uploadData(filePath){
         const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
         await axios.post(BACKEND_URL + '/story', {
             title:storyData.title,
@@ -87,12 +87,21 @@ export function CreateStories(){
             }
         }).then((res)=>{
             console.log(res.data)
+            setErrorMessage({
+                title:'Success',
+                content:'Your story have been sucessfully ',
+                keyword:'Uploaded',
+                command:['okay'],
+                type:'success'
+            })
+            setOpenError(true)
         }).catch((err)=>{
             console.log(err)
         })
     }
 
     async function UploadImages(){
+        let filepath = [];
         for(let file of imageFile){
             // console.log(file.name)
             
@@ -101,15 +110,13 @@ export function CreateStories(){
             await axios.post(BACKEND_URL + '/upload/cloudinary/Artwork', formData, {headers:{
                 "Content-Type":"multipart/form-data"
             }}).then((value)=>{
-                setFilePath((prev)=>{ 
-                    return [...prev,  value.data.fileDetails.path]
-                });
+                filepath.push(value.data.fileDetails.path)
             }).catch((err)=>{
                 console.log(err)
             })
 
         }
-
+        return filepath;
     }
 
 
@@ -127,7 +134,7 @@ export function CreateStories(){
         }
     }, [imageFile])
 
-
+ 
     return <div className="create-stories-main-body-container home-page-body">
             <ErrorDialogComp
                 commands={errorMessage.command}
@@ -215,11 +222,23 @@ export function CreateStories(){
                 <div className="signup-field-container">
                     <div className="signup-label-input-container">
                             <p>Title</p>
-                            <input type="text" name="name" placeholder="Enter your name"/>
+                            <input 
+                            type="text" 
+                            name="title" 
+                            placeholder="Enter your name"
+                            value={storyData.title}
+                            onChange={(e)=>{
+                                setStoryData((prev)=>({...prev, title:e.target.value}))
+                            }}
+                            />
                     </div>
                     <div className="signup-label-input-container">
                             <p>Write text</p>
-                            <textarea type="text" name="name" placeholder="Write story here" style={{
+                            <textarea 
+                            type="text" 
+                            name="content" 
+                            placeholder="Write story here" 
+                            style={{
                                 height:140,
                                 padding:10,
                                 marginLeft:10,
@@ -227,13 +246,18 @@ export function CreateStories(){
                                 marginTop:5,
                                 marginBottom:5,
                                 borderRadius:8
-                            }}/>
+                            }}
+                            value={storyData.content}
+                            onChange={(e)=>{
+                                setStoryData((prev)=>({...prev, content:e.target.value}))
+                            }}
+                            />
                     </div>
                     <div className="signup-label-input-container">
                         <p>Attach display picture</p>
                         <div className="creator-input-div">
                             <p>Select up to 3 photos</p>
-                            <div className='creator-input-image-container'>
+                            <div className='creator-input-image-container'   onClick={()=>setOpenModal(true)}>
                                 <img src={link}/>
                             </div>
                         </div>

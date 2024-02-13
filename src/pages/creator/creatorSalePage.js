@@ -78,7 +78,7 @@ export function CreatorSale(){
         setActivityIndicator(true)
             try{
                 UploadImages().then((value)=>{
-                    uploadData().then((value)=>{
+                    uploadData(value).then((value)=>{
 
                     })
                 }).finally(()=>{
@@ -104,6 +104,8 @@ export function CreatorSale(){
     }
 
     async function UploadImages(){
+        let error = false;
+        let filepath = [];
         for(let file of imageFile){
             // console.log(file.name)
             
@@ -112,34 +114,50 @@ export function CreatorSale(){
             await axios.post(BACKEND_URL + '/upload/cloudinary/Artwork', formData, {headers:{
                 "Content-Type":"multipart/form-data"
             }}).then((value)=>{
-                setFilePath((prev)=>{ 
-                    return [...prev,  value.data.fileDetails.path]
-                });
+                filepath.push(value.data.fileDetails.path);
             }).catch((err)=>{
-                console.log(err)
+                error = true
             })
 
+           
         }
+        setErrorMessage({
+                title:'Error',
+                command:['okay'],
+                content:'An error occured while trying to upload image',
+                type:'warning'
+        })
+            return filepath;
+ 
+
 
     }
 
 
-    async function uploadData(){
+    async function uploadData(filepath){
         const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
         await axios.post(BACKEND_URL + '/artwork', {
             title:artData.title,
             category:categoryState,
             description:artData.description,
             saleType:saleType.toUpperCase(),
-            price:saleType === 'original' ? 100000 : artData.amount,
-            imageUris:filePath
+            price:artData.amount,
+            imageUris:filepath,
+            quantity:text
 
         }, {
             headers:{
                 Authorization:`Bearer ${accessToken}`
             }
         }).then((res)=>{
-            console.log(res.data)
+            console.log(res)
+            setErrorMessage({
+                title:'success',
+                content:'artwork uploaded successfully',
+                type:'success',
+                command:['okay']
+            })
+            setOpenError(true);
         }).catch((err)=>{
             console.log(err)
         })

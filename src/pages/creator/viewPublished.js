@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {ReactComponent as Profile} from '../../assets/Profile 1.svg';
 import {ReactComponent as Category} from '../../assets/Category.svg';
 import { BottomNavi } from "../../components/bottomNavi";
 import image1 from '../../assets/image1.png';
 import image2 from '../../assets/image2.png';
 import rafki from '../../assets/rafiki.png';
+import { ClipLoader } from "react-spinners";
+import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGEPROFILEKEY } from "../../config";
+import axios from "axios";
 
 export function ViewedPublished(){
+    const [loadingdata, setLoadingData] = useState(false)
+
     let [chosenContent, SetChosenContent] = useState({
         store:true,
         album:false,
@@ -51,9 +56,33 @@ export function ViewedPublished(){
             isActive:false
         },
     ]
-
+    async function getPublishedData(){
+        let profileId = JSON.parse(localStorage.getItem(LOCALSTORAGEPROFILEKEY)).id
+        let accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
+        await axios.get(BACKEND_URL + '/story/own' + `?profileId=${profileId}&currentPage={2}`, {
+            headers:{
+                Authorization:`Bearer ${accessToken}`
+            }
+        }).then((value)=>{
+            console.log(value)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+    useEffect(()=>{
+        getPublishedData()
+    }, [])
     return <div className="view-published-main-container home-page-body">
-        <div style={{overflowY:'scroll'}}>
+        { loadingdata ? <div style={{
+            height:'100%',
+            width:'100vw',
+            padding:'30px 0',
+            display:'flex',
+            justifyContent:'center'
+            
+        }}>
+            <ClipLoader color="#BE774C" size={30} />
+        </div>: <div style={{overflowY:'scroll'}}>
             <div className="shop-header-container" style={{
                         minHeight:50,
                         display:'flex',
@@ -147,7 +176,8 @@ export function ViewedPublished(){
                     </div>}
                 </div>}
 
-        </div>
+        </div>}
+        
         <div className="shop-footer-container">
             <BottomNavi imageTextObjectArray={iconTextArray}/>
         </div>

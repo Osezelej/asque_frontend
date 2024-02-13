@@ -37,6 +37,7 @@ export function CreatorAlbum(){
     })
 
     async function UploadImages(){
+        let filepath = [];
         for(let file of imageFile){
             // console.log(file.name)
             
@@ -45,35 +46,36 @@ export function CreatorAlbum(){
             await axios.post(BACKEND_URL + '/upload/cloudinary/Artwork', formData, {headers:{
                 "Content-Type":"multipart/form-data"
             }}).then((value)=>{
-                setFilePath((prev)=>{ 
-                    return [...prev,  value.data.fileDetails.path]
-                });
+                filepath.push(value.data.fileDetails.path);
+                
             }).catch((err)=>{
                 console.log(err)
             })
 
         }
-
+       return filepath;
     }
 
-   async function uploadData (){
+   async function uploadData (filepath){
     let returnData;
     let data = ''
+    console.log(filepath)
         categoryState.forEach(element => {
             data += element + ','
         });
         const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
         await axios.post(BACKEND_URL + '/album', {
             title: albumData.title,
-            category:data,
+            category:categoryState,
             description:albumData.attachText,
-            albumImageUris:filePath
+            albumImageUris:filepath
         }, {
             headers:{
                 Authorization:`Bearer ${accessToken}`
             }
         }).then((value)=>{
             returnData = true;
+            console.log(value)
         }).catch((err)=>{console.log(err)
             setErrorMessage({
                 title:'Error',
@@ -100,9 +102,10 @@ export function CreatorAlbum(){
         }
         
         setActivityIndicator(true);
+        
             try{
                 UploadImages().then(async(value)=>{
-                    uploadData().then((value)=>{
+                    uploadData(value).then((value)=>{
                         if(value){
                             setErrorMessage({
                                 title:'Success!',
