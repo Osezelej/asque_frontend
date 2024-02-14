@@ -6,14 +6,37 @@ import image2 from '../../assets/image2.png';
 import {ReactComponent as Profile} from '../../assets/Profile 1.svg';
 import {ReactComponent as Home} from '../../assets/Home3.svg';
 import {ReactComponent as Category} from '../../assets/Category.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SearchRounded } from '@mui/icons-material';
-import '../../css/admin.css'
-import { Modal } from '@mui/material';
-import ModalIcon from '../../assets/unsuccess.png';
+import '../../css/admin.css';
 import { ErrorDialogComp } from '../../components/errorDialogComp';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { profileThunk } from '../../store/user';
+import { ClipLoader } from 'react-spinners';
 
 export function AdminHome(){
+    const profileState = useSelector(state=>state.user.profile)
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate();
+    
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search)
+    const userid = searchParams.get('q')
+
+    const [artistProfileLoading, setArtistProfileLoading] = useState(true)
+
+
+    const [errorMessage, setErrorMessage] = useState({
+        title:"",
+        content:"",
+        keyword:"",
+        type:"",
+        command:[],
+
+    })
+
     const [trendingData, setTrandingData] = useState([1,2,3,4,54,5,6,7,3,3]);
     const iconTextArray =[
         {
@@ -36,6 +59,7 @@ export function AdminHome(){
             text:"Community"
         },
     ]
+
     let imagesArray = [image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2,image1, image2];
     const imageArray = [image1, image2, trending1, trending2, trending3]
     let [chosenContent, SetChosenContent] = useState({
@@ -44,25 +68,57 @@ export function AdminHome(){
         stories:false,
     });
     let [openModal, setOpenModal] = useState(false)
-    function handleModalState(){
-        
-    }
+
+
+    useEffect(()=>{
+        if(!profileState.loading && !profileState.error && !profileState.fufilled){
+            console.log(profileState)
+            dispatch(profileThunk(userid))
+        }
+        if(profileState.error){
+            setOpenModal(true)
+            setErrorMessage({
+                title:"Error!",
+                content:"An error occured while trying to get profile details",
+                keyword:", try signing in again",
+                type:"warining",
+                command:['okay'],
+            })
+            navigate('/auth/signin')
+        }
+        if(!profileState.loading){
+            setArtistProfileLoading(false)
+        }
+
+    }, [profileState])
+
+    
+
+
     return <div className="home-page-body">
     <ErrorDialogComp 
-        content={"Are you sure you want to delete"} 
-        title={"Confirm delete"}
-        commands={["No,back", "Yes"]}
+        content={errorMessage.content} 
+        title={errorMessage.title}
+        commands={errorMessage.command}
         openModal={openModal}
         setOpenModal={setOpenModal}
-        contentKeyword={"Kanuri castle?"}
-        type={'warning'}
+        contentKeyword={errorMessage.keyword}
+        type={errorMessage.type}
     />
    
-        <div style={{overflowY:'scroll'}}>
+     {artistProfileLoading ? <div style={{
+        height:'100vh',
+        display:'flex',
+        justifyContent:'center',
+        paddingTop:50,
+        width:'97vw'
+     }}>
+        <ClipLoader color='#BE774C' size={30}/>
+     </div> : <div style={{overflowY:'scroll'}}>
             <div className="home-header-container ">
                 <div className="home-name-greeting-container">
-                    <h3>Blessed</h3>
-                    <p>Good afternoon, welcome back</p>
+                    <h3>{profileState.name}</h3>
+                    <p>Good afternoon, welcome back </p>
                 </div>
                 
             </div>
@@ -192,13 +248,22 @@ export function AdminHome(){
                                     </div>
                                 </div>
                                 <div className='share-shopnow-button-container'>
-                                    <button className='shopnow-button' style={{width:'100%'}} onClick={()=>setOpenModal(true)} >Delete Now </button>
+                                    <button className='shopnow-button' style={{width:'100%'}} onClick={()=>{
+                                        setErrorMessage({
+                                            content:"Are you sure you want to delete",
+                                            title:"Confirm delete",
+                                            command:["No,back", "Yes"],
+                                            keyword:"Kanuri castle?",
+                                            type:'warning'
+                                        })
+                                        
+                                        setOpenModal(true)}} >Delete Now </button>
                                 </div>
                             </div>)}
                         </div>}
             </div>
         </div>
-        </div>
+        </div> }   
 
 
     </div>

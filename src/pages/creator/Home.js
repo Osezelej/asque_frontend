@@ -9,7 +9,7 @@ import '../../css/creator.css';
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
-import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGEPROFILEKEY } from "../../config";
+import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY} from "../../config";
 import { useDispatch, useSelector } from "react-redux";
 import { profileThunk } from "../../store/user";
 import { ErrorDialogComp } from "../../components/errorDialogComp";
@@ -88,7 +88,6 @@ export function CreatorHome(){
         })
     }
     useEffect(()=>{
-        console.log(profileState)
         if(!profileState.loading && !profileState.error && !profileState.fufilled){
             dispatch(profileThunk(userid))
         }

@@ -74,8 +74,8 @@ export function SignIn(){
 
     useEffect(()=>{
         if(userState.fufiled){
-            if(userState.isAdmin){
-                return navigate ('/admin')
+            if(userState.role == 'ADMIN'){
+                return navigate ('/admin?q=' + userState.userid)
             }
             if(userState.role == 'ARTIST'){
                 return navigate('/creator/home?q=' + userState.userid)
@@ -101,9 +101,7 @@ export function SignIn(){
                         minHeight:150,
                         padding:15
                     }}>
-                        <AuthHeader 
-                            
-                        />
+                        <AuthHeader />
                         <h2 style={{marginTop:15}}>Welcome back</h2>
             </div>     
             <div className="signUp-body">
