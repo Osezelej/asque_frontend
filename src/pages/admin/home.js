@@ -1,8 +1,6 @@
 import trending1 from '../../assets/trending1.png';
 import trending2 from '../../assets/trending2.png';
 import trending3 from '../../assets/trending3.png';
-import image1 from '../../assets/image1.png';
-import image2 from '../../assets/image2.png';
 import { useState, useEffect } from 'react';
 import { SearchRounded } from '@mui/icons-material';
 import '../../css/admin.css';
@@ -40,7 +38,7 @@ export function AdminHome(){
             return setOpenModal(true)
         }
         let accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
-        await axios.get(BACKEND_URL + `/${category}/all` + `?page=${page}&pageSize=${10}`, {
+        await axios.get(BACKEND_URL + `/${category}/all?page=${page}&pageSize=${10}`, {
             headers:{
                 Authorization:`Bearer ${accessToken}`
             }
@@ -88,7 +86,7 @@ export function AdminHome(){
         command:[],
 
     })
-
+ // eslint-disable-next-line 
     const [trendingData, setTrandingData] = useState([1,2,3,4,54,5,6,7,3,3]);
     let [imagesArray , setImageArray]= useState([]);
     const [albumContent, setAlbumContent] = useState([]);
@@ -97,13 +95,15 @@ export function AdminHome(){
         category:'artwork',
         page:1
     });
-    const imageArray = [image1, image2, trending1, trending2, trending3]
     let [chosenContent, SetChosenContent] = useState({
         store:true,
         album:false,
         stories:false,
     });
     let [openModal, setOpenModal] = useState(false)
+    const [deleteText, setDeleteText] = useState('');
+    const [itemValueId, setItemValueId] = useState('');
+    const [activityIndicator, setActivityIndicator] = useState(false);
 
 
     useEffect(()=>{
@@ -125,7 +125,7 @@ export function AdminHome(){
         if(!profileState.loading){
             setArtistProfileLoading(false)
         }
-
+ // eslint-disable-next-line 
     }, [profileState])
 
 
@@ -137,6 +137,8 @@ export function AdminHome(){
                 console.log(value.data)
                 setImageArray(value.data)
             }
+        }).finally(()=>{
+            setActivityIndicator(false)
         })
 
         }else if (chosenContent.album){
@@ -146,6 +148,8 @@ export function AdminHome(){
                     console.log(value.data)
                     setAlbumContent(value.data)
                 }
+            }).finally(()=>{
+                setActivityIndicator(false)
             })
 
         }else{
@@ -155,11 +159,65 @@ export function AdminHome(){
                     console.log(value.blogs)
                     setStoriesContent(value.blogs)
                 }
+            }).finally(()=>{
+                setActivityIndicator(false)
             })
         }
-    }, [categoryData.page, chosenContent]);
+         // eslint-disable-next-line 
+        }, [categoryData.page, chosenContent]);
     
 
+    useEffect(()=>{
+        if(deleteText.toLowerCase() !== 'delete'){
+                return ;
+        }
+        console.log(deleteText)
+        if(chosenContent.store){
+            
+            handleDeleteData('artwork', itemValueId).then((value)=>{
+                getPublishedData('artwork', categoryData.page).then((value)=>{
+                    if (value){
+                        console.log(value.data)
+                        setImageArray(value.data)
+                    }
+                }).finally(()=>{
+                    setDeleteText('')
+                })
+            })
+
+        }else if(chosenContent.album){
+
+            handleDeleteData('album', itemValueId).then((value)=>{
+                getPublishedData('album', categoryData.page).then((value)=>{
+                    if (value){
+                        console.log(value.data)
+                        setAlbumContent(value.data)
+                    }
+                }).finally(()=>{
+                    setDeleteText('')
+                })
+            })
+
+        }else if(chosenContent.stories){
+
+            handleDeleteData('story', itemValueId).then((value)=>{
+                getPublishedData('story', categoryData.page).then((value)=>{
+                    if (value){
+                        console.log(value.blogs)
+                        setStoriesContent(value.blogs)
+                    }
+                }).finally(()=>{
+                    setDeleteText('')
+                })
+            })
+
+        }
+
+
+        
+ // eslint-disable-next-line 
+    }, [deleteText])
+    
 
     return <div className="home-page-body">
     <ErrorDialogComp 
@@ -170,6 +228,9 @@ export function AdminHome(){
         setOpenModal={setOpenModal}
         contentKeyword={errorMessage.keyword}
         type={errorMessage.type}
+        feedbackFunction={(e)=>{
+            setDeleteText(e.target.innerText)
+        }}
     />
    
      {artistProfileLoading ? <div style={{
@@ -191,7 +252,6 @@ export function AdminHome(){
             <div className="home-body-container">
             <div className="trending-artwork-container">
                 <h4>Edit collections</h4>
-                <p className="active">see all</p>
             </div>
             
             <div >
@@ -233,7 +293,15 @@ export function AdminHome(){
                                     borderBottomStyle:'solid',
                                     paddingBottom:5,
 
-                                    }}>Store</p>:<p onClick={()=>SetChosenContent((prev)=>{return {album:false, store:true, stories:false}})}>Store</p>
+                                    }}
+                                    onClick={()=>{
+                                        setCategoryData({
+                                            ...categoryData, page:1
+                                        })
+                                    }}
+                                    >Store</p>:<p onClick={()=>{
+                                        setCategoryData({...categoryData, page:1})
+                                        SetChosenContent((prev)=>{return {album:false, store:true, stories:false}})}}>Store</p>
                                     
                     }
                     {chosenContent.album ? <p style={{
@@ -243,7 +311,16 @@ export function AdminHome(){
                                     borderBottomStyle:'solid',
                                     paddingBottom:5,
 
-                                    }}>Album</p>:<p onClick={()=>SetChosenContent((prev)=>{return {album:true, store:false, stories:false}})} >Album</p>
+                                    }}
+                                    onClick={()=>{
+                                        setCategoryData({
+                                            ...categoryData, page:1
+                                        })
+                                    }}
+                                    >Album</p>:<p onClick={()=>{
+                                        
+                                        setCategoryData({...categoryData, page:1})
+                                        SetChosenContent((prev)=>{return {album:true, store:false, stories:false}})}} >Album</p>
                                     
                     }
                     {chosenContent.stories? <p   style={{
@@ -253,7 +330,15 @@ export function AdminHome(){
                                     borderBottomStyle:'solid',
                                     paddingBottom:5,
 
-                                    }}>Stories</p>:<p onClick={()=>SetChosenContent((prev)=>{return {album:false, store:false, stories:true}})}>Stories</p>
+                                    }}
+                                    onClick={()=>{
+                                        setCategoryData({
+                                            ...categoryData, page:1
+                                        })
+                                    }}
+                                    >Stories</p>:<p onClick={()=>{
+                                        setCategoryData({...categoryData, page:1})
+                                        SetChosenContent((prev)=>{return {album:false, store:false, stories:true}})}}>Stories</p>
                                     
                     }
                 </div>
@@ -293,6 +378,7 @@ export function AdminHome(){
                                     </p>
                                     <p className='text'>
                                         {value.description.substring(0, 25)}
+                                        {value.description.length > 25 && '...'}
                                     </p>
                                 </div>
                                 <p className='price'>${value.price}</p>
@@ -303,74 +389,128 @@ export function AdminHome(){
                                     className='shopnow-button' 
                                     style={{width:'100%'}} 
                                     onClick={()=>{
-                                        handleDeleteData('artwork', value.id).then((value)=>{
-                                            getPublishedData('artwork', 1).then((value)=>{
-                                                if (value){
-                                                    console.log(value.data)
-                                                    setImageArray(value.data)
-                                                }
-                                            })
+                                        setItemValueId(value.id)
+                                        setErrorMessage({
+                                            content:"Are you sure you want to delete",
+                                            title:"Confirm delete",
+                                            command:["No,back", "Delete"],
+                                            keyword: value.title + "?",
+                                            type:'warning'
                                         })
+                                        setOpenModal(true);
+
+                                       
                                 }}>
                                 Delete Now 
                                 </button>
                             </div>
 
                     </div>)
-                    }
+                    } 
+                    {imagesArray.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
+                        <button onClick={()=>{
+                        if(activityIndicator){
+                            return 
+                        }
+                        setActivityIndicator(true)
+                        setCategoryData({...categoryData, page:categoryData.page + 1})
+                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' See more'}</button>
+                </div>}
                 </div>
                 }
                
                 {(chosenContent.album && ! loadingdata)&& <div className="home-photo-mainbody" style={{rowGap:25}}>
                     {albumContent.map((value, index)=> <div className='shop-body-content-item-container' key={index}>
-                            <div className='image-section'>
-                                <img src={value} alt='photo'/>
+                            <div className='image-section' style={{
+                                    width:'5%',
+                                    height:'60%'
+                                }}>
+                                <img src={value.albumImageUris[0]} alt='' style={{
+                                    objectFit:'contain',
+                                    height:'100%'
+                                }}/>
                             </div>
                             <div className='item-name-text-price-container'>
                                 <div className='item-name-text-container'>
                                     <p className='title'>
-                                        Walls of Kano
+                                        {value.title}
                                     </p>
                                     <p className='text'>
-                                        The Ancient kano city walls
+                                    {value.description.substring(0, 25)}
+                                    {value.description.length > 25 && '...'}
                                     </p>
                                 </div>
                                 <p className='price'></p>
                             </div>
                             <div className='share-shopnow-button-container'>
                                 
-                                <button className='shopnow-button' style={{width:'100%'}}>Delete Now </button>
+                                <button className='shopnow-button' style={{width:'100%'}}
+                                 onClick={()=>{
+                                        setItemValueId(value.id)
+                                        setErrorMessage({
+                                            content:"Are you sure you want to delete",
+                                            title:"Confirm delete",
+                                            command:["No,back", "Delete"],
+                                            keyword:value.title + "?",
+                                            type:'warning'
+                                        })
+                                        setOpenModal(true);
+                                       
+                                }}
+                                >Delete Now </button>
                             </div>
 
                     </div>)
                     }
+                    {albumContent.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
+                        <button onClick={()=>{
+                        if(activityIndicator){
+                              return 
+                        }
+                        setActivityIndicator(true)
+                        setCategoryData({...categoryData, page:categoryData.page + 1})
+                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' See more'}</button>
+                </div>}
                 </div>}
                 {(chosenContent.stories && ! loadingdata) &&  <div className='Stories-body-container'>
                             {storyContent.map((value)=><div>
                                 <div className='stories-item-container'>
 
                                     <div className='text-container'>
-                                        <p className='title'>Kanuri Castle</p>
-                                        <p style={{fontSize:14, width:251}}>Lets make your comfort zone memorable, Order for a product Above 50,000 naira and get a free Shipping. </p>
+                                        <p className='title'>{value.title}</p>
+                                        <p style={{fontSize:14, width:251}}> {value.content.substring(0, 120)}
+                                    {value.content.length > 120 && '...'}</p>
                                     </div>
                                     <div className='story-image-containe'>
-                                        <img src={value} height={55} width={55}/>
+                                        <img alt='' src={value.firstImage} height={55} width={55}/>
                                     </div>
                                 </div>
                                 <div className='share-shopnow-button-container'>
                                     <button className='shopnow-button' style={{width:'100%'}} onClick={()=>{
+                                        
+                                        setItemValueId(value.id)
                                         setErrorMessage({
                                             content:"Are you sure you want to delete",
                                             title:"Confirm delete",
-                                            command:["No,back", "Yes"],
-                                            keyword:"Kanuri castle?",
+                                            command:["No,back", "Delete"],
+                                            keyword: value.title + "?",
                                             type:'warning'
                                         })
                                         
                                         setOpenModal(true)}} >Delete Now </button>
                                 </div>
                             </div>)}
+                            {storyContent.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
+                        <button onClick={()=>{
+                        if(activityIndicator){
+                              return 
+                        }
+                        setActivityIndicator(true)
+                        setCategoryData({...categoryData, page:categoryData.page + 1})
+                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' See more'}</button>
+                </div>}
                         </div>}
+                        
             </div>
         </div>
         </div> }   

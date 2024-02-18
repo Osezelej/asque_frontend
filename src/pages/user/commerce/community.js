@@ -40,9 +40,9 @@ export function Community(){
                 </div>
             <div className="empty-content-display-container " style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', marginTop:20}}>
                             <div className="empty-content-image-container">
-                                    <img src={community}/>
+                                    <img src={community} alt=''/>
                             </div>
-                            <p>You haven't published anything yet.</p>
+                            <p>Comming Soon!!</p>
 
             </div>
 

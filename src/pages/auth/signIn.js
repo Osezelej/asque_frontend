@@ -66,24 +66,28 @@ export function SignIn(){
 
     useEffect(()=>{
         if (!openError){
-            if(errorMessage.type == 'success'){
+            if(errorMessage.type === 'success'){
                 navigate('/market/home')
             }
         }
+
+         // eslint-disable-next-line 
     }, [openError])
 
     useEffect(()=>{
         if(userState.fufiled){
-            if(userState.role == 'ADMIN'){
+            if(userState.role === 'ADMIN'){
                 return navigate ('/admin?q=' + userState.userid)
             }
-            if(userState.role == 'ARTIST'){
+            if(userState.role === 'ARTIST'){
                 return navigate('/creator/home?q=' + userState.userid)
             }else{
                     
             navigate('/market/home')
             }
         }
+
+         // eslint-disable-next-line 
     },[userState])
 
     return (

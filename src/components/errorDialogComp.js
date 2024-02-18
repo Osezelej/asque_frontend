@@ -4,7 +4,7 @@ import ModalIcon from '../assets/unsuccess.png';
 import SuccessModalIcon from '../assets/successReceipt.png';
 
 
-export function ErrorDialogComp ({content, contentKeyword, title, commands, type, openModal, setOpenModal}){
+export function ErrorDialogComp ({content, contentKeyword, title, commands, type, openModal, setOpenModal, feedbackFunction}){
     
    
     
@@ -60,7 +60,12 @@ export function ErrorDialogComp ({content, contentKeyword, title, commands, type
                 }}>
                
                 {commands.map((value)=><div className='modal-action-button' key={value}>
-                    <p style={{color:'black'}} onClick={()=>setOpenModal(false)}>{value}</p>
+                    <p style={{color:'black'}} onClick={(e)=>{
+                        if(feedbackFunction ){
+                            feedbackFunction(e)
+                        }
+                        setOpenModal(false)
+                        }}>{value}</p>
                 </div>)}
             </div>
 

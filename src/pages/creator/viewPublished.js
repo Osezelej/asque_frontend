@@ -2,17 +2,13 @@ import { useEffect, useState } from "react";
 import {ReactComponent as Profile} from '../../assets/Profile 1.svg';
 import {ReactComponent as Category} from '../../assets/Category.svg';
 import { BottomNavi } from "../../components/bottomNavi";
-import image1 from '../../assets/image1.png';
-import image2 from '../../assets/image2.png';
 import rafki from '../../assets/rafiki.png';
 import { ClipLoader } from "react-spinners";
-import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGEPROFILEKEY } from "../../config";
+import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY } from "../../config";
 import axios from "axios";
 import { ErrorDialogComp } from '../../components/errorDialogComp';
-import { useNavigate } from "react-router-dom";
 
 export function ViewedPublished(){
-    const navigate = useNavigate();
     const [loadingdata, setLoadingData] = useState(false);
     const [categoryData, setCategoryData] = useState({
         category:'artwork',
@@ -76,7 +72,7 @@ export function ViewedPublished(){
             return setOpenError(true)
         }
         let accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
-        await axios.get(BACKEND_URL + `/${category}/own` + `?page=${page}&pageSize=${10}`, {
+        await axios.get(BACKEND_URL + `/${category}/own?page=${page}&pageSize=${10}`, {
             headers:{
                 Authorization:`Bearer ${accessToken}`
             }
@@ -112,6 +108,8 @@ export function ViewedPublished(){
                 
                 setImageArray(value.data)
             }
+        }).finally(()=>{
+            setActivityIndicator(false)
         })
 
         }else if (chosenContent.album){
@@ -121,6 +119,8 @@ export function ViewedPublished(){
                     console.log(value.data)
                     setAlbumContent(value.data)
                 }
+            }).finally(()=>{
+                setActivityIndicator(false)
             })
 
         }else{
@@ -130,6 +130,8 @@ export function ViewedPublished(){
                     console.log(value.blogs)
                     setStoriesContent(value.blogs)
                 }
+            }).finally(()=>{
+                setActivityIndicator(false)
             })
         }
     }, [categoryData.page, chosenContent]);
@@ -160,7 +162,17 @@ export function ViewedPublished(){
                                         borderBottomStyle:'solid',
                                         paddingBottom:5,
 
+                                        }}
+                                        onClick={()=>{
+                                            setCategoryData({
+                                                ...categoryData, 
+                                                page:1
+                                            })
                                         }}>Listed artwork</p>:<p onClick={()=>{
+                                            setCategoryData({
+                                                ...categoryData, 
+                                                page:1
+                                            })
                                             SetChosenContent((prev)=>{
                                                 return {
                                                     album:false, 
@@ -180,7 +192,19 @@ export function ViewedPublished(){
                                         borderBottomStyle:'solid',
                                         paddingBottom:5,
 
-                                        }}>Album</p>:<p onClick={()=>SetChosenContent((prev)=>{return {album:true, store:false, stories:false}})} >Album</p>
+                                        }}
+                                        onClick={()=>{
+                                            setCategoryData({
+                                                ...categoryData, 
+                                                page:1
+                                            })
+                                        }}>Album</p>:<p onClick={()=>{
+                                            setCategoryData({
+                                                ...categoryData, 
+                                                page:1
+                                            })
+                                            SetChosenContent((prev)=>{return {album:true, store:false, stories:false}})
+                                            }} >Album</p>
                                         
                         }
                         {chosenContent.stories? <p   style={{
@@ -190,7 +214,18 @@ export function ViewedPublished(){
                                         borderBottomStyle:'solid',
                                         paddingBottom:5,
 
-                                        }}>Stories</p>:<p onClick={()=>SetChosenContent((prev)=>{return {album:false, store:false, stories:true}})}>Stories</p>
+                                        }}
+                                        onClick={()=>{
+                                            setCategoryData({
+                                                ...categoryData, 
+                                                page:1
+                                            })
+                                        }}>Stories</p>:<p onClick={()=>{
+                                            setCategoryData({
+                                                ...categoryData, 
+                                                page:1
+                                            })
+                                            SetChosenContent((prev)=>{return {album:false, store:false, stories:true}})}}>Stories</p>
                                         
                         }
                 </div>
@@ -206,9 +241,9 @@ export function ViewedPublished(){
                     </div>
                 }
                 {(chosenContent.store && ! loadingdata) && <div className="creator-detail-item-container">
-                {imageArray.length == 0 && <div className="empty-content-display-container"  style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', marginTop:20}}>
+                {imageArray.length === 0 && <div className="empty-content-display-container"  style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', marginTop:20}}>
                         <div className="empty-content-image-container">
-                                <img src={rafki}/>
+                                <img src={rafki} alt=""/>
                         </div>
                         <p>You haven't published anything yet.</p>
 
@@ -217,7 +252,7 @@ export function ViewedPublished(){
                         imageArray.map((value, index)=>{
                             return  <div className="artwork-collection-container" style={{marginTop:10, marginBottom:10}}>
                             <div className="artwork-image-container">
-                                {value.imageUris.length > 0 && <img src={value.imageUris[0]} style={{
+                                {value.imageUris.length > 0 && <img alt="" src={value.imageUris[0]} style={{
                                     width:'100%',
                                     height:200,
                                     objectFit:'cover',
@@ -229,29 +264,32 @@ export function ViewedPublished(){
                                     <p className="title" style={{fontWeight:'bold'}}>
                                         {value.title}
                                     </p>
-                                    {value.status == 'sold' ? <div style={{color:'#45A14D', display:'flex', columnGap:10, alignItems:'center'}} >
+                                    {value.status === 'sold' ? <div style={{color:'#45A14D', display:'flex', columnGap:10, alignItems:'center'}} >
                                         <div style={{height:4, width:4, borderRadius:10, backgroundColor:'#45A14D'}} ></div>
-                                        <p style={{color:'#45A14D'}}>{'status'}</p>
+                                        <p style={{color:'#45A14D'}}>sold out</p>
                                     </div>: <div style={{color:'#E6A545', display:'flex', columnGap:10, alignItems:'center'}}>
                                         <div style={{height:4, width:4, borderRadius:10, backgroundColor:'#E6A545'}}></div>
-                                        <p style={{color:'#E6A545'}}>{value.status}</p>
+                                        <p style={{color:'#E6A545'}}>still in stock</p>
                                     </div>}
                                 </div>
                                 <p className="active"> $ {value.price}</p>
                             </div>
-                            {index == 9 && <div className="add-to-cart-button-container">
-                    <button onClick={()=>{
+                            
+                        </div>})
+                    }
+                    {imageArray.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
+                        <button onClick={()=>{
                         if(activityIndicator){
                             return 
                         }
-                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' Publish'}</button>
+                        setActivityIndicator(true)
+                        setCategoryData({...categoryData, page:categoryData.page + 1})
+                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' See more'}</button>
                 </div>}
-                        </div>})
-                    }
                 </div>}
                 {(chosenContent.album && ! loadingdata) && <div 
                 className="creator-detail-item-container">
-                    {albumContent.length == 0 && <div 
+                    {albumContent.length === 0 && <div 
                     className="empty-content-display-container" 
                     style={{
                         width:'100%', 
@@ -263,7 +301,7 @@ export function ViewedPublished(){
                         }}>
 
                         <div className="empty-content-image-container">
-                                <img src={rafki}/>
+                                <img src={rafki} alt=""/>
                         </div>
                         <p>You haven't published anything yet.</p>
 
@@ -275,16 +313,25 @@ export function ViewedPublished(){
                                     {/* <p className='active' onClick={()=>navigate('/collection/' + value.id)}>View</p> */}
                                 </div>
                                 <div className='image-container'>
-                                    <img src={value.albumImageUris[0]} loading="lazy" />
+                                    <img src={value.albumImageUris[0]} loading="lazy"  alt=""/>
                                 </div>
                             </div>)
                     }
+                    {albumContent.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
+                        <button onClick={()=>{
+                        if(activityIndicator){
+                            return 
+                        }
+                        setActivityIndicator(true)
+                        setCategoryData({...categoryData, page:categoryData.page + 1})
+                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' See more'}</button>
+                </div>}
                 </div>}
                 {(chosenContent.stories && ! loadingdata )&& <div className="creator-detail-item-container">
                 
-                {storiesContent.length == 0 && <div className="empty-content-display-container" style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', marginTop:20}}>
+                {storiesContent.length === 0 && <div className="empty-content-display-container" style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', marginTop:20}}>
                         <div className="empty-content-image-container">
-                                <img src={rafki}/>
+                                <img src={rafki} alt=""/>
                         </div>
                         <p>You haven't published anything yet.</p>
 
@@ -292,25 +339,27 @@ export function ViewedPublished(){
 
                     {
                         storiesContent.map((value, index)=>{
-                            console.log(value.content)
                             return <div className='stories-item-container ' >
                                 <div className='text-container'>
                                     <p className='title'>{value.title}</p>
                                     <p style={{fontSize:14, width:251}}>{value.content.substring(0, 120)}</p>
                                 </div>
                                 <div className='story-image-containe'>
-                                    <img src={value.firstImage} height={55} width={55}/>
+                                    <img src={value.firstImage} height={55} width={55} alt=""/>
                                 </div>
-                                {index == 9 && <div className="add-to-cart-button-container">
-                    <button onClick={()=>{
-                        if(activityIndicator){
-                            return 
-                        }
-                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' Publish'}</button>
-                </div>}
+                                
                             </div>
                         })
                     }
+                    {storiesContent.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
+                        <button onClick={()=>{
+                        if(activityIndicator){
+                            return 
+                        }
+                        setActivityIndicator(true)
+                        setCategoryData({...categoryData, page:categoryData.page + 1})
+                    }}> {activityIndicator ? <ClipLoader color='white' size={25} />  :' See more'}</button>
+                </div>}
                 </div>}
 
         </div>

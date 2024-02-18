@@ -42,13 +42,13 @@ export function SignUp(){
         await axios.post(BACKEND_URL + '/auth/register', userData.referalCode.length > 0 ? {
             name:userData.username,
             email:userData.email,
-            type: (role === 'creator' ? "artist":"USER"),
+            type: (role === 'creator' ? "ARTIST":"USER"),
             referralCode:userData.referalCode,
             password:userData.password
         }:  {
             name:userData.username,
             email:userData.email,
-            type: (role === 'creator' ? "ARTIST":"user"),
+            type: (role === 'creator' ? "ARTIST":"USER"),
             password:userData.password
         }).then((data)=>{
             setErrorMessage((prev)=>{
@@ -79,12 +79,14 @@ export function SignUp(){
         })
     }
 
+    
     useEffect(()=>{
         if (!openError){
-            if(errorMessage.type == 'success'){
+            if(errorMessage.type === 'success'){
                 navigate('/auth/signin')
             }
         }
+         // eslint-disable-next-line 
     }, [openError])
     return (
     <div  className="signup-container">

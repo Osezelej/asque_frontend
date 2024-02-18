@@ -15,11 +15,13 @@ export function CreatorAlbum(){
     const dispath = useDispatch()
     useEffect(()=>{
         dispath(resetCategory())
+         // eslint-disable-next-line 
     }, [])
     const [activityIndicator, setActivityIndicator] = useState(false)
     const [openDrawerState, setOpenDrawerState]= useState(false);
     const [openModal, setOpenModal] = useState(false)
     const [imageFile, setImageFile] = useState([]);
+     // eslint-disable-next-line 
     const [filePath, setFilePath] = useState([]);
     const [albumData, setAlbumData] = useState({
         title:"",
@@ -58,6 +60,7 @@ export function CreatorAlbum(){
 
    async function uploadData (filepath){
     let returnData;
+     // eslint-disable-next-line 
     let data = ''
     console.log(filepath)
         categoryState.forEach(element => {
@@ -90,7 +93,7 @@ export function CreatorAlbum(){
 
     function handlePublishData(){
         //TODO:same the images 
-        if(albumData.title.length == 0 || categoryState.length == 0 || imageFile.length == 0){
+        if(albumData.title.length === 0 || categoryState.length === 0 || imageFile.length === 0){
              setErrorMessage({
                 title:'Wrong Input',
                 content:'check you input fields and ',
@@ -234,7 +237,7 @@ export function CreatorAlbum(){
                         <div className="creator-input-div">
                             <p>select</p>
                             <div className='creator-input-image-container' onClick={()=>setOpenDrawerState(true)}>
-                                <img src={downArrow}/>
+                                <img alt='' src={downArrow}/>
                             </div>
                         </div>
                     </div>
@@ -243,7 +246,7 @@ export function CreatorAlbum(){
                         <div className="creator-input-div" onClick={()=>setOpenModal(true)}>
                             <p>Select up to 20 photos</p>
                             <div className='creator-input-image-container'>
-                                <img src={link}/>
+                                <img alt='' src={link}/>
                             </div>
                         </div>
                     </div>
