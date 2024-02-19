@@ -3,33 +3,101 @@ import image2 from '../../../assets/image2.png';
 import Delete from '../../../assets/delete.png';
 import { Quantity } from '../../../components/quantity';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { LOCALSTORAGECARTKEY } from '../../../config';
+import { addTocart, adjustItemPrice, removeFromCart } from '../../../store/cart';
 
+function CartItem({image, title, price, id,}){
+    const [num, setNum] = useState(1)
+    let [_price, setPrice] = useState(price);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        setPrice(price * num)
+        dispatch(adjustItemPrice({id, itemNum:num}))
+        
+    }, [num])
+
+    return <div className="cartDetail-item-container">
+                <div className="cart-image-detail-container">
+                    <img src={image} height={75} width={75} />
+                    <div className='detail-container'>
+                        <p className='cart-title'>{title}</p>
+                        {/* <p className='cart-size'>Size 40cm x 30cm</p> */}
+                        <p className='cart-price' style={{
+                            color:'#BE774C'
+                        }} >${_price}</p>
+                    </div>
+                </div>
+                <div className='quantity-delete-container'>
+                <div className="quantity-container">
+                        <button className="quantity-button" onClick={()=>{
+                            (num > 1 && setNum (num- 1))
+                           
+                            } }>-</button>
+                        <p>{num}</p>
+                        <button className="quantity-button" onClick={()=>{
+
+                            setNum(num+1)
+                            }}>+</button>
+                    </div>
+                    <img src={Delete} onClick={()=>{
+                        dispatch(removeFromCart({id}))
+                    }}/>
+                </div>
+            </div>
+}
 
 export function Checkout(){
     const navigate = useNavigate();
+    const cartData = useSelector(state=>state.cart.cartData)
+    const dispatch = useDispatch();
+    const [data_, setData_] = useState(0)
+    const [total, setTotal] = useState(0)
+
+    useEffect(()=>{
+        
+        if (cartData.length == 0){
+
+            if(data_ == 0){
+                let data = JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY));
+                if(data){
+                    console.log(data)
+                    data.forEach(element => {
+                        
+                        dispatch(addTocart(element))
+                    });
+                }
+                setData_(1)
+                
+            }
+        }
+        let amount = 0
+        cartData.forEach((value)=>{
+            amount += value.price * value.itemNum 
+        })  
+        setTotal(amount)
+        
+    }, [cartData])
     
-    const cartDetail = [image1, image2, image1, image2]
+    
     return <div className="checkout-main-container home-page-body">
         <div className="shop-header-container" style={{
-            minHeight:90
+            minHeight:80, 
+            maxHeight:80
         }}>
             <h2>Checkout</h2>
         </div>
         <div className="order-item-container">
-            {cartDetail.map((value)=><div className="cartDetail-item-container">
-                <div className="cart-image-detail-container">
-                    <img src={value} height={75} width={75} />
-                    <div className='detail-container'>
-                        <p className='cart-title'>Arthdal Chronicles</p>
-                        <p className='cart-size'>Size 40cm x 30cm</p>
-                        <p className='cart-price'>$2398</p>
-                    </div>
-                </div>
-                <div className='quantity-delete-container'>
-                    <Quantity/>
-                    <img src={Delete}/>
-                </div>
-            </div>)}
+            {cartData.map((value, index)=>{
+                return <CartItem 
+                    key={index}
+                    image={value.imageUris[0]}
+                    title={value.title}
+                    price={value.price}
+                    id={value.id}
+                />
+                })}
         </div>
         <div className='address-summary-container'>
             <div className='delivery-address-container'>
@@ -40,22 +108,10 @@ export function Checkout(){
             <div className='summary-container'>
                 <h5>Order Summary</h5>
                 <div className='summary-details-container'>
-                    <div>
-                        <p>Arthdal Chronicles</p>
-                        <p>$2398</p>
-                    </div>
-                    <div>
-                        <p>Arthdal Chronicles</p>
-                        <p>$2398</p>
-                    </div>
-                    <div>
-                        <p>Arthdal Chronicles</p>
-                        <p>$1345</p>
-                    </div>
-                    <div>
-                        <p>Tax & fees</p>
-                        <p>$10,300</p>
-                    </div>
+                {[...cartData, {title:'Tax & fees', price:total, itemNum:1}].map((value, index)=><div key={index}>
+                        <p>{value.title}</p>
+                        <p>${value.price * value.itemNum}</p>
+                    </div>)}
                 </div>
             </div>
             <div className="add-to-cart-button-container">

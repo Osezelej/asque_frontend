@@ -67,7 +67,7 @@ export function SignIn(){
     useEffect(()=>{
         if (!openError){
             if(errorMessage.type === 'success'){
-                navigate('/market/home')
+                // navigate('/market/home')
             }
         }
 
@@ -75,6 +75,7 @@ export function SignIn(){
     }, [openError])
 
     useEffect(()=>{
+        console.log(userState)
         if(userState.fufiled){
             if(userState.role === 'ADMIN'){
                 return navigate ('/admin?q=' + userState.userid)
@@ -83,7 +84,7 @@ export function SignIn(){
                 return navigate('/creator/home?q=' + userState.userid)
             }else{
                     
-            navigate('/market/home')
+            navigate('/market/home?q=' + userState.userid)
             }
         }
 

@@ -207,6 +207,7 @@ font-weight: 600;
     flex-direction: column;
     height: 250px;
     justify-content: space-between;
+    width: fit-content;
 }
 
 

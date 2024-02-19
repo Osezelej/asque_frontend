@@ -14,6 +14,7 @@ const userThunk = createAsyncThunk('user/registeruser', async (userData, thunkAp
       localStorage.setItem(LOCALSTORAGEAUTHKEY, JSON.stringify(data));
 
     }).catch((error)=>{
+      console.log(error)
       throw new Error('an error occured please try again')
     })
   }catch(e){
@@ -36,6 +37,7 @@ const profileThunk = createAsyncThunk('user/profile', async(userid, thunkApi)=>{
             localStorage.setItem(LOCALSTORAGEPROFILEKEY, JSON.stringify(value.data.message.profile))
             data = value.data.message.profile;
         }).catch((err)=>{
+          console.log(err)
           throw new Error('an error occured')
         })
         return data
@@ -81,9 +83,6 @@ const userSlice = createSlice({
         state.user.isAdmin = payload.isAdmin;
       },
         registerUserProfile(state, {payload}){
-          state.profile.error = false;
-          state.profile.loading = false;
-          state.profile.fufilled = true;
           state.profile.accountName = payload.accountName;
           state.profile.accountNumber = payload.accountNumber;
           state.profile.bank = payload.bank;
@@ -94,6 +93,9 @@ const userSlice = createSlice({
           state.profile.name = payload.name;
           state.profile.profilePicUrl = payload.profilePicUri;
           state.profile.websiteUrl = payload.websiteLink;
+          state.profile.error = false;
+          state.profile.loading = false;
+          state.profile.fufilled = true;
   
           let name = payload.name;
           let nameList = name.split(' ');
@@ -107,8 +109,20 @@ const userSlice = createSlice({
           state.profile.initials = initial.toUpperCase()
           state.user.email = payload.userEmail;
           
+        },
+        resetProfile(state, {payload}){
+          state.profile.error = false;
+          state.profile.loading = false;
+          state.profile.fufilled = false;
+        },
+        resetUser(state, {payload}){
+          state.user.fufiled = false;
+          state.user.error = false;
+          state.user.loading = false
         }
     },
+
+
     extraReducers(builder){
       builder.addCase(userThunk.pending, (state, {payload})=>{
         state.user.loading = true;
@@ -116,13 +130,13 @@ const userSlice = createSlice({
         state.user.error = false;
       });
       builder.addCase(userThunk.fulfilled, (state, {payload})=>{
-        state.user.fufiled = true;
-        state.user.error = false;
-        state.user.loading = false;
         state.user.userid = payload.id;
         state.user.role = payload.role;
         state.user.email = payload.email;
         state.user.isAdmin = payload.isAdmin;
+        state.user.fufiled = true;
+        state.user.error = false;
+        state.user.loading = false;
 
       });
       builder.addCase(userThunk.rejected, (state, {payload})=>{
@@ -137,9 +151,6 @@ const userSlice = createSlice({
         state.profile.fufilled = false;
       });
       builder.addCase(profileThunk.fulfilled, (state, {payload})=>{
-        state.profile.error = false;
-        state.profile.loading = false;
-        state.profile.fufilled = true;
         state.profile.accountName = payload.accountName;
         state.profile.accountNumber = payload.accountNumber;
         state.profile.bank = payload.bank;
@@ -150,6 +161,9 @@ const userSlice = createSlice({
         state.profile.name = payload.name;
         state.profile.profilePicUrl = payload.profilePicUri;
         state.profile.websiteUrl = payload.websiteLink;
+        state.profile.error = false;
+        state.profile.loading = false;
+        state.profile.fufilled = true;
 
         let name = payload.name;
         let nameList = name.split(' ');
@@ -174,6 +188,6 @@ const userSlice = createSlice({
 })
 
 const userReducer = userSlice.reducer;
-const {registerUserProfile, registerUser}  = userSlice.actions
+const {registerUserProfile, registerUser, resetProfile, resetUser}  = userSlice.actions
 export default userReducer;
-export {userThunk, profileThunk, registerUserProfile, registerUser }
+export {userThunk, profileThunk, registerUserProfile, registerUser, resetProfile, resetUser }
