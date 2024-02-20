@@ -3,56 +3,115 @@ import image2 from '../../../assets/image2.png';
 import trending1 from '../../../assets/trending1.png';
 import trending2 from '../../../assets/trending2.png';
 import trending3 from '../../../assets/trending3.png';
-import {ReactComponent as Profile} from '../../../assets/Profile 1.svg';
-import {ReactComponent as Home} from '../../../assets/Home3.svg';
-import {ReactComponent as Category} from '../../../assets/Category.svg';
-import { BottomNavi } from "../../../components/bottomNavi";
 import Carousel from 'react-material-ui-carousel';
 import like from '../../../assets/Vector.png';
 import share from '../../../assets/Share.png';
+import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { ClipLoader } from 'react-spinners';
+import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY } from '../../../config';
+import axios from 'axios';
+import { ErrorDialogComp } from '../../../components/errorDialogComp';
+
 
 export function AlbumDesc(){
-    const imageArray = [image1, image2, trending1, trending2, trending3]
-    const iconTextArray =[
-        {
-            icon:Home,
-            text:"Home",
-            link:"/market/home"
-        },
-        {
-            icon:Category,
-            text:"Shop",
-            link:"/market/shop"
-        },
-        {
-            icon:Category,
-            text:"Collection",
-            link:"/collection"
-        },
-        {
-            icon:Profile,
-            text:"Community"
-        },
-    ]
+    const imageArray = [image1, image2, trending1, trending2, trending3];
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search)
+    const albumid = searchParams.get('aid');
+    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+
+    const [loadingState, setLoadingState] = useState(false);
+    const [artistProfileId, setArtistProfileId] = useState('');
+    const [artDetail, setArtDetail] = useState(false);
+    const [activityIndicator, setActivityIndicator] = useState('');
+    const [itemToAdd, setItemToAdd] = useState(0);
+    
+   const [errorMessage, setErrorMessage] = useState({
+    title:"",
+    content:"",
+    command:[],
+    type:"",
+    keyword:""
+   })
+   const [openError, setOpenError] = useState(false);
+
+   
+   const date = new Date(artDetail.updatedAt);
+   async function getArtworkItem(artworid){
+    setLoadingState(true);
+    let accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
+
+    await axios.get(BACKEND_URL + '/album/' + artworid, {
+        headers:{
+            Authorization:`Bearer ${accessToken}`
+        }
+    })
+    .then((value)=>{
+        console.log(value.data.data)
+        setArtistProfileId(value.data.data.album.ProfileId)
+        setArtDetail(value.data.data.album)
+    })
+    .catch((err)=>{
+        console.log(err);
+        setErrorMessage({
+            title:'Error',
+            content:err.message,
+            type:'warning',
+            command:['Okay']
+        })
+        setOpenError(true)
+    })
+    .finally((err)=>{
+        
+    })
+    }
+    useEffect(()=>{
+        getArtworkItem(albumid).finally(()=>{
+            setLoadingState(false)
+        });
+
+    }, [])
+
+    
+
     return <div className='detail-desc-main-container home-page-body'>
-                <div style={{overflowY:'scroll', paddingBottom:100}}>
+                <ErrorDialogComp 
+                     content={errorMessage.content} 
+                    title={errorMessage.title}
+                    commands={errorMessage.command}
+                    openModal={openError}
+                    setOpenModal={setOpenError}
+                    contentKeyword={errorMessage.keyword}
+                    type={errorMessage.type}
+                />
+                 {loadingState && <div style={{
+            height:'100vh',
+            width:'99vw',
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center',
+        }}>
+            <ClipLoader color='#BE774C' size={35}/>
+        </div>}
+                {!loadingState && artDetail  && <div style={{overflowY:'scroll', paddingBottom:100}}>
                     <div className="collection-main-header">
                       
                     </div>
                     <div className='collection-main-body'>
-                        <Carousel>
+                        {artDetail && <Carousel>
                             {
-                                imageArray.map((value)=><div className='collection-detail-image-container'>
-                                    <img src={value}/>
+                                artDetail.albumImageUris.map((value, index)=><div className='collection-detail-image-container' key={index}>
+                                    <img src={value} alt=''/>
                                 </div>)
                             }
-                        </Carousel>
+                        </Carousel>}
                     </div>
                     <div className='title-like-share-container'>
                         <div className='title-name-publiser-container'>
-                            <p className='title'>Kanuri Castle</p>
-                            <p className='creator'>creator:Favour Onuoha</p>
-                            <p className='publish'>published:Nov 11, 2022</p>
+                            <p className='title'>{artDetail.title}</p>
+                            <p className='creator'>creator:{artDetail.profile.name}</p>
+                            <p className='publish'>published: {month[date.getMonth()] +' '+ date.getDay() + ', ' + date.getFullYear()}</p>
                         </div>
                         <div className='like-share-button-container'>
                             <button className='like-button'>
@@ -66,13 +125,10 @@ export function AlbumDesc(){
                         </div>
                     </div>
                     <div className='description-container'>
-                        <p>Lets make your comfort zone memorable, Order for a product Above 50,000 naira and get a free Shipping. Lets make your comfort zone memorable, Order for a product Above 50,000 naira and get a free Shipping.</p>
+                        <p>{artDetail.description}</p>
                     </div>
 
-                </div>
-            <div className="home-footer-container">
-                <BottomNavi imageTextObjectArray={iconTextArray}/>
-            </div>
+                </div>}
 
     </div>
 }

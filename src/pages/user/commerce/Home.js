@@ -106,8 +106,8 @@ export function MarketHome(){
         feedbackFunction={(e)=>{
             console.log(e.target.innerText)
             if(profileState.error){
-                dispatch(resetProfile);
-                dispatch(resetUser);
+                dispatch(resetProfile());
+                dispatch(resetUser());
             }
         }}
     />

@@ -54,6 +54,17 @@ export function Shop(){
         
     }).catch((err)=>{
         console.log(err)
+        if(err.message == 'Network Error'){
+            setErrorMessage({
+                title:'Network error',
+                content:'No ',
+                keyword:'Internet connection',
+                command:['okay'],
+                type:'warning'
+            });
+            return setOpenError(true);
+
+        }
         setErrorMessage({
             title:'Error',
             content:err.response.data.message,
@@ -193,7 +204,11 @@ export function Shop(){
                                     display:'flex',
                                     'justifyContent':'center',
                                     alignItems:'center'
-                                }} onClick={()=>navigate('/market/detail/artwork')}>
+                                }} onClick={()=>{
+                                    // console.log(value.id)
+                                    navigate('/market/detail/artwork' + '?pid='+value.id)
+                                    
+                                    }}>
                                 <img src={value.imageUris[0]} alt='' style={{
                                     objectFit:'contain',
                                     height:'100%',
@@ -232,7 +247,15 @@ export function Shop(){
                         if(data){
                             
                         setActivity(false)
-                            return ;
+                            setErrorMessage({
+                                title: 'Duplicate item',
+                                content:value.title + ' have been added to cart ',
+                                keyword:'already',
+                                command:['okay'],
+                                type:'warning'
+                            })
+                            return  setOpenError(true);
+                            
                         }
 
                         setItemToAdd( 1)
@@ -248,7 +271,7 @@ export function Shop(){
 
     </div>)
 }
-{imagesArray.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
+{imagesArray.length === 25 && <div className="add-to-cart-button-container" style={{width:'100%'}}>
                         <button onClick={()=>{
                         if(activityIndicator){
                             return 
