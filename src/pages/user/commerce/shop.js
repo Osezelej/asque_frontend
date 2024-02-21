@@ -8,11 +8,11 @@ import { json, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
-import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGECARTKEY } from '../../../config';
+import BACKEND_URL, { FRONTEND_URL, LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGECARTKEY } from '../../../config';
 import { ErrorDialogComp } from '../../../components/errorDialogComp';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNum, addTocart, resetCartData } from '../../../store/cart';
-
+import { SnackBar } from '../../../components/snackBar';
 
 
 function ShopButtonComp({handleClick}){
@@ -21,7 +21,7 @@ function ShopButtonComp({handleClick}){
 }
 
 export function Shop(){
-
+   const [snackState, setSnackState] = useState(false);
    const cartData = useSelector(state=>state.cart.cartData);
    const cartLen  = useSelector(state=>state.cart.cartLen);
    const dispatch = useDispatch();
@@ -42,6 +42,9 @@ export function Shop(){
    })
    const [openError, setOpenError] = useState(false);
    const [itemToAdd, setItemToAdd] = useState(0);
+
+
+
    async function getArtwork(page){
     setLoadingState(true)
     const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY)
@@ -130,10 +133,27 @@ export function Shop(){
             link:"/community/blessed",
         },
     ]
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                console.log('Text copied to clipboard:', text);
+                setSnackState(true)
+            })
+            .catch(err => {
+                console.error('Failed to copy text:', err);
+            });
+    }
 
-
+    useEffect(()=>{
+        if(snackState){
+            setTimeout(()=>{
+                setSnackState(false)
+            }, 1000)
+        }
+    }, [snackState])
   
     return <div className="shop-main-body home-page-body">
+         <SnackBar text={'Url coppied'} onState={snackState} closeState={()=>setSnackState(false)}/>
          <ErrorDialogComp
                 commands={errorMessage.command}
                 content={errorMessage.content}
@@ -147,7 +167,12 @@ export function Shop(){
         <div style={{overflowY:'scroll'}}>
 
             <div className="shop-header-container">
-                <div className="basket-section" onClick={()=>navigate('/market/cart')}>
+                <div className="basket-section" onClick={()=>{
+                    // console.log(JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)))
+                    if (JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)).length === 0){
+                    return ;
+                }
+                    navigate('/market/cart')}}>
                     <ShoppingBagOutlined/>
                     <div style={{
                             padding:2,
@@ -229,8 +254,11 @@ export function Shop(){
                 <p className='price'>${value.price}</p>
             </div>
             <div className='share-shopnow-button-container'>
-                <button className='share-button'>
-                    <img src={share} alt=""/>
+                <button className='share-button' onClick={()=>{
+                    const textToCopy = FRONTEND_URL + '/market/detail/artwork?sid=' +  value.id;
+                    copyToClipboard(textToCopy);
+                }}>
+                    <img src={share} alt="" />
                 </button>
                 <ShopButtonComp 
                     handleClick={(activity, setActivity)=>{

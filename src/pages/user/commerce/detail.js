@@ -1,21 +1,21 @@
-import image1 from '../../../assets/image1.png';
-import image2 from '../../../assets/image2.png';
 import share from '../../../assets/Share.png'
-import {ReactComponent as Bag} from '../../../assets/Bag 6.svg'
-import { Quantity } from '../../../components/quantity';
 import { ShoppingBagOutlined } from '@mui/icons-material';
 import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGECARTKEY } from '../../../config';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCartData, addTocart} from '../../../store/cart';
 import { ErrorDialogComp } from '../../../components/errorDialogComp';
+import { SnackBar } from '../../../components/snackBar';
+import { FRONTEND_URL } from '../../../config';
 
 
 export function Details (){
-    const imagesArray = [image1, image2, image1, image2]
+    const navigate = useNavigate();
+    const [snackState, setSnackState] = useState(false);
+    const [imagesArray, setImagesArray] = useState([]); 
     const cartData = useSelector(state=>state.cart.cartData);
     const cartLen  = useSelector(state=>state.cart.cartLen);
     const dispatch = useDispatch();
@@ -92,6 +92,13 @@ export function Details (){
 
     }, [])
 
+    useEffect(()=>{
+        if(snackState){
+            setTimeout(()=>{
+                setSnackState(false)
+            }, 1000)
+        }
+    }, [snackState])
      
    useEffect(()=>{
     if(cartData.length == 0){
@@ -104,7 +111,22 @@ export function Details (){
    }, [cartData]);
 
 
+
+
+   function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            console.log('Text copied to clipboard:', text);
+            setSnackState(true)
+        })
+        .catch(err => {
+            console.error('Failed to copy text:', err);
+        });
+}
+
+
     return <div className="detail-main-body  home-page-body">
+    <SnackBar text={'URl coppied'} onState={snackState} closeState={()=>{setSnackState(false)}}/>
             <ErrorDialogComp
                 commands={errorMessage.command}
                 content={errorMessage.content}
@@ -127,7 +149,12 @@ export function Details (){
        maxHeight:80,
        minHeight:80,
       }}>
-            <div className="basket-section">
+            <div className="basket-section" onClick={()=>{
+                if (JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)).length === 0){
+                    return ;
+                }
+                navigate('/market/cart')
+            }}>
                 <ShoppingBagOutlined/>
                 <div style={{
                             padding:2,
@@ -163,7 +190,10 @@ export function Details (){
         {!loadingState && <div className="title-share-desc-container">
             <div className="title-share">
                 <h4>{artDetail.title}</h4>
-                <button>
+                <button onClick={()=>{
+                    const textToCopy = FRONTEND_URL + '/market/detail/artwork?sid=' +  productid;
+                    copyToClipboard(textToCopy);
+                    }}>
                     <img src={share}/>
                     <p>share</p>
                 </button>
@@ -230,9 +260,9 @@ export function Details (){
         </div>}
 
        {!loadingState && <div className="footer-detail-container">
-            <p className="footer-detail-title">
+            {/* <p className="footer-detail-title">
                 Art related to <b>{artDetail.title}</b>
-            </p>
+            </p> */}
             <div style={{
                 display:'flex', 
                 overflowX:'scroll', 

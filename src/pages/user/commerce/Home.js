@@ -1,4 +1,4 @@
-import { ShoppingBagOutlined, ShoppingBasketRounded } from "@mui/icons-material";
+import { ConstructionRounded, ShoppingBagOutlined, ShoppingBasketRounded } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import trending1 from '../../../assets/trending1.png';
 import trending2 from '../../../assets/trending2.png';
@@ -15,7 +15,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { profileThunk, resetProfile, resetUser } from "../../../store/user";
 import { ErrorDialogComp } from "../../../components/errorDialogComp";
 import { ClipLoader } from "react-spinners";
-import { LOCALSTORAGEAUTHKEY } from "../../../config";
+import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGEAUTHKEY } from "../../../config";
+import axios from "axios";
+
+
+
+
 
 
 export function MarketHome(){
@@ -59,9 +64,76 @@ export function MarketHome(){
         },
     ]
 
-    const [artistProfileLoading, setArtistProfileLoading] = useState(true)
-    const [loadingdata, setLoadingData] = useState(false);
+    const [artistProfileLoading, setArtistProfileLoading] = useState(true);
+    const [loadingdata, setLoadingData] = useState(true);
     const userState = useSelector(state=>state.user.user)
+    
+    const [imagesArray, setImagesArray] = useState([]);
+    const [isDone, setIsDone] = useState(false)
+
+
+    async function getArtwork(){
+        setLoadingData(true);
+        const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
+        await axios.get(BACKEND_URL + '/artwork/newest', {
+            headers:{
+                Authorization:`Bearer ${accessToken}`
+            }
+        }).then((value)=>{
+            console.log(value.data.data);
+            setTrandingData(value.data.data);
+            
+        }).catch((err)=>{
+            console.log(err)
+            setErrorMessage({
+                title:"Error!",
+                content:"An error occured while trying to get artWork",
+                keyword:", try signing in again",
+                type:"warning",
+                command:['okay'],
+            })
+            
+            setOpenError(true)
+        })
+    }
+
+    async function getAlbum(){
+        
+        setLoadingData(true);
+        const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
+        await axios.get(BACKEND_URL + '/album/newest', {
+            headers:{
+                Authorization:`Bearer ${accessToken}`
+            }
+        }).then((value)=>{
+            console.log(value.data.data)
+            setImagesArray([...imagesArray, ...value.data.data])
+            setIsDone(true)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+
+
+    async function getStory(){
+        
+        setLoadingData(true);
+        const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
+        await axios.get(BACKEND_URL + '/story/newest', {
+            headers:{
+                Authorization:`Bearer ${accessToken}`
+            }
+        }).then((value)=>{
+            console.log(value.data.data)
+            
+            setImagesArray([...imagesArray, ...value.data.data])
+        }).catch((err)=>{
+            console.log(err)
+        }).finally(()=>{
+            setLoadingData(false)
+            setIsDone(false)
+        })
+    }
 
     useEffect(()=>{
         console.log('first')
@@ -88,11 +160,23 @@ export function MarketHome(){
         if(!profileState.loading){
             setArtistProfileLoading(false)
         }
+        if(profileState.fufilled){
+            getArtwork()
+            
+            getAlbum()
+        }
 
     }, [profileState])
 
 
-    const imagesArray = [image1, image2, trending1, trending2, trending3,trending2, trending3, trending2];
+    useEffect(()=>{
+        if(isDone){
+            getStory()
+        }
+    } , [imagesArray])
+
+
+
     return <div className="home-page-body ">
 
      <ErrorDialogComp 
@@ -138,17 +222,19 @@ export function MarketHome(){
             {
                 trendingData.map((value, index)=> <div className="home-image-item-container" key={index}>
                     <div>
-                        <img alt=""  src={trending1}/>
+                       {!loadingdata && <img alt=""  src={value.imageUris[0]} height={130} width={130} style={{
+                        borderRadius:5
+                       }}/>} 
                         <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
                     </div>
-                    <div>
+                    {/* <div>
                         <img alt=""  src={trending2}/>
                         <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
                     </div>
                     <div>   
                         <img alt=""  src={trending3}/>
                         <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
-                    </div>
+                    </div> */}
                 </div>)
             }
             </div>}
@@ -163,12 +249,14 @@ export function MarketHome(){
                         <ClipLoader color="#BE774D" size={35}/>
                 </div> :
                 <div className="home-photo-mainbody">
-                    {imagesArray.map((value)=> <div className="home-photo-mainbody-item">
-                            <img src={value} alt={'text'}/>
+                    {imagesArray.map((value)=> {
+                        return <div className="home-photo-mainbody-item">
+                            {!loadingdata && value.albumImageUris !== undefined && <img style={{borderRadius:7}} src={value.albumImageUris[0]} width={156} height={190} alt=''/>}
+                            {!loadingdata && value.albumImageUris === undefined && <img style={{borderRadius:7}} src={value.secondImage} width={156} height={190} alt=''/>}
                             <div className="text-structurecontainer">
-                                <p>Walls of Kano</p>
+                                <p>{value.title}</p>
                             </div>
-                    </div>)}
+                    </div>})}
                 </div>}
             </div>
         </div>
