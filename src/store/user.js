@@ -58,7 +58,7 @@ const userSlice = createSlice({
             role: "",
             isAdmin:false,
           },
-            profile:{
+          profile:{
               profileid:'',
               accountName:"",
               accountNumber:"",
@@ -73,9 +73,15 @@ const userSlice = createSlice({
               fufilled:false,
               websiteUrl:"",
               initials:""
-            }
+          },
+          address:''
     },
     reducers:{
+
+      registerUserAddress(state, {payload}){
+        state.address = payload;
+      },
+
       registerUser(state, {payload}){
         state.user.userid = payload.id;
         state.user.role = payload.role;
@@ -188,6 +194,6 @@ const userSlice = createSlice({
 })
 
 const userReducer = userSlice.reducer;
-const {registerUserProfile, registerUser, resetProfile, resetUser}  = userSlice.actions
+const {registerUserProfile, registerUser, resetProfile, resetUser, registerUserAddress}  = userSlice.actions
 export default userReducer;
-export {userThunk, profileThunk, registerUserProfile, registerUser, resetProfile, resetUser }
+export {userThunk, profileThunk, registerUserProfile, registerUser, resetProfile, resetUser, registerUserAddress }

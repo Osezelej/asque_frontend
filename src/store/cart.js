@@ -30,7 +30,6 @@ const cartSlice = createSlice({
             state.cartData = state.cartData.map((value)=>{
                 
                 if (value.id == payload.id){
-                    console.log(value.price, payload.itemNum)
                     value.itemNum = payload.itemNum;
                 }
                 return value

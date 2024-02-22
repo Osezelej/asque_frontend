@@ -19,7 +19,7 @@ export function BottomAuthComp({activityIndicator,navigateFunction,actionTextDes
         </button>
         <div className="action-text-container">
             <p>{actionTextDescription}</p>
-            <p className="active" onClick={()=>{navigate(actionText == 'Log in' ? '/auth/signin': '/auth/signup')}}>{actionText}</p>
+            <p className="active" onClick={()=>{navigate(actionText == 'Log in' ? '/auth/signin': '/auth/signup-as')}}>{actionText}</p>
         </div>
     </div>
 }

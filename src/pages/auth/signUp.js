@@ -104,7 +104,7 @@ export function SignUp(){
                         minHeight:130,
                         padding:15
                     }}>
-                        <AuthHeader from={'signup'}/>
+                        <AuthHeader />
                         <h2 style={{marginTop:15}}>Sign up</h2>
                 </div>     
         <div className="signUp-body">

@@ -12,11 +12,12 @@ import { BottomNavi } from "../../../components/bottomNavi";
 import '../../../css/user.css';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { profileThunk, resetProfile, resetUser } from "../../../store/user";
+import { profileThunk, resetProfile, resetUser, } from "../../../store/user";
 import { ErrorDialogComp } from "../../../components/errorDialogComp";
 import { ClipLoader } from "react-spinners";
-import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGEAUTHKEY } from "../../../config";
+import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY, LOCALSTORAGEAUTHKEY, LOCALSTORAGECARTKEY } from "../../../config";
 import axios from "axios";
+import { resetCartData, addTocart } from "../../../store/cart";
 
 
 
@@ -25,6 +26,8 @@ import axios from "axios";
 
 export function MarketHome(){
     const profileState = useSelector(state=>state.user.profile)
+    // const cartData = useSelector(state=>state.cart.cartData);
+    // const cartLen  = useSelector(state=>state.cart.cartLen);
     const dispatch = useDispatch()
 
     const navigate = useNavigate();
@@ -80,7 +83,7 @@ export function MarketHome(){
                 Authorization:`Bearer ${accessToken}`
             }
         }).then((value)=>{
-            console.log(value.data.data);
+            // console.log(value.data.data);
             setTrandingData(value.data.data);
             
         }).catch((err)=>{
@@ -106,7 +109,7 @@ export function MarketHome(){
                 Authorization:`Bearer ${accessToken}`
             }
         }).then((value)=>{
-            console.log(value.data.data)
+            // console.log(value.data.data)
             setImagesArray([...imagesArray, ...value.data.data])
             setIsDone(true)
         }).catch((err)=>{
@@ -124,7 +127,7 @@ export function MarketHome(){
                 Authorization:`Bearer ${accessToken}`
             }
         }).then((value)=>{
-            console.log(value.data.data)
+            // console.log(value.data.data)
             
             setImagesArray([...imagesArray, ...value.data.data])
         }).catch((err)=>{
@@ -177,6 +180,8 @@ export function MarketHome(){
 
 
 
+
+
     return <div className="home-page-body ">
 
      <ErrorDialogComp 
@@ -192,6 +197,7 @@ export function MarketHome(){
             if(profileState.error){
                 dispatch(resetProfile());
                 dispatch(resetUser());
+                navigate('/auth/signin')
             }
         }}
     />
@@ -202,7 +208,7 @@ export function MarketHome(){
                 <p>Good afternoon, welcome back</p>
             </div>
             <div className="home-cart-profile-pic-container">
-                <div onClick={()=>navigate('/market/cart')}><ShoppingBagOutlined/></div>
+           
                 <p onClick={()=>navigate('/profile/blessed')}>{profileState.initials}</p>
             </div>
         </div>

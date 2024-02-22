@@ -5,7 +5,8 @@ import { useEffect, useState } from "react"
 export function CheckoutSummary(){
     const navigate = useNavigate()
     const cartData = useSelector(state=>state.cart.cartData)
-    const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState(0);
+    const userAddress = useSelector(state=>state.user.address)
     useEffect(()=>{
         let amount = 0
         cartData.forEach((value)=>{
@@ -20,10 +21,13 @@ export function CheckoutSummary(){
         </div>
 
          <div className='address-summary-container'>
-            <div className='delivery-address-container'>
+         <div className='delivery-address-container'>
                 <p className='title'>Delivery Address</p>
-                <p className='address'>141 Grace street, Lekki, Lagos, Nigeria</p>
-                <p className='change'>change address</p>
+                <p className='address'>{userAddress}</p>
+                <p className='change' onClick={()=>{
+                    
+                    navigate('/market/pickupLocation')
+                }}>change address</p>
             </div>
             <div className='summary-container'>
                 <h5>Order Summary</h5>

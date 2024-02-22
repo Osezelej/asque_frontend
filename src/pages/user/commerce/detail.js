@@ -150,7 +150,10 @@ export function Details (){
        minHeight:80,
       }}>
             <div className="basket-section" onClick={()=>{
-                if (JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)).length === 0){
+                  if(JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)) === null){
+                        return ;
+                    }
+                    if (JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY))?.length === 0){
                     return ;
                 }
                 navigate('/market/cart')

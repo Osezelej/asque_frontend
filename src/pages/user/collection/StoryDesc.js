@@ -4,16 +4,17 @@ import like from '../../../assets/Vector.png';
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import {  useLocation, useNavigate } from 'react-router-dom';
-import BACKEND_URL, {LOCALSTORAGEACCESSTOKENKEY} from '../../../config';
+import BACKEND_URL, {LOCALSTORAGEACCESSTOKENKEY, FRONTEND_URL} from '../../../config';
 import axios from 'axios';
 import { ErrorDialogComp } from '../../../components/errorDialogComp';
+import { SnackBar } from '../../../components/snackBar';
+
 
 export function StoryDesc(){
     const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search)
     const storyid = searchParams.get('sid');
-    console.log(storyid)
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
     const [loadingState, setLoadingState] = useState(false);
@@ -29,6 +30,27 @@ export function StoryDesc(){
    const [openError, setOpenError] = useState(false);
 
 
+   const [snackState, setSnackState] = useState(false)
+
+   function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            console.log('Text copied to clipboard:', text);
+            setSnackState(true)
+        })
+        .catch(err => {
+            console.error('Failed to copy text:', err);
+        });
+}
+
+useEffect(()=>{
+    if(snackState){
+        setTimeout(()=>{
+            setSnackState(false)
+        }, 1000)
+    }
+}, [snackState])
+
     async function getArtworkItem(artworid){
         setLoadingState(true);
         let accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
@@ -39,7 +61,6 @@ export function StoryDesc(){
             }
         })
         .then((value)=>{
-            console.log(value.data.message.blog)
             setArtDetail(value.data.message.blog)
         })
         .catch((err)=>{
@@ -69,6 +90,8 @@ export function StoryDesc(){
 
         const date = new Date(artDetail.updatedAt);
     return <div className="story-desc-body-page home-page-body">
+    
+    <SnackBar text={'Url coppied'} onState={snackState} closeState={()=>setSnackState(false)}/>
                 <ErrorDialogComp 
                      content={errorMessage.content} 
                     title={errorMessage.title}
@@ -101,11 +124,16 @@ export function StoryDesc(){
                         <p className='creator'>creator: {artDetail.profile.name}</p>
                         <p className='publish'>published:  {month[date.getMonth()] +' '+ date.getDay() + ', ' + date.getFullYear()}</p>
                     </div>
-                    <div className='like-share-button-container'>
-                        <button className='like-button'>
+                    <div className='like-share-button-container' style={{
+                        justifyContent:'flex-end'
+                    }}>
+                        {/* <button className='like-button'>
                             <img src={like} height={15} width={17}/>
-                        </button>
-                        <button className='share-button'>
+                        </button> */}
+                        <button className='share-button' onClick={()=>{
+                    const textToCopy = FRONTEND_URL + '/market/detail/artwork?sid=' +  artDetail.id;
+                    copyToClipboard(textToCopy);
+                }}>
                             <img src={share} alt=''/>
                         </button>
                     </div>

@@ -23,7 +23,7 @@ export function Signas(){
                 <div className="shop-header-container" style={{
                         minHeight:150
                     }}>
-                        <AuthHeader from={'signup'}/>
+                        <AuthHeader />
                         <h2 style={{marginTop:15}}>Sign up as</h2>
                 </div>      
         </div>

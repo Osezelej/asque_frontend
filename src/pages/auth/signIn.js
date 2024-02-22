@@ -128,13 +128,15 @@ export function SignIn(){
 
                     />
 
-                    <div className="signup-label-check-container">
-                     <div style={{display:'flex'}}>
+                    <div className="signup-label-check-container" style={{
+                        justifyContent:'flex-end'
+                    }}>
+                     {/* <div style={{display:'flex'}}>
                         <input type="checkbox" name="remember"/>
                         <p style={{
                             marginLeft:5,
                         }}>Remember me</p>
-                     </div>
+                     </div> */}
                         <p className="forgot-password-active" onClick={()=>{navigate('/auth/recoverpassword')}}>forgot password?</p>
                     </div>
                 </div>

@@ -34,9 +34,9 @@ export function CategoryDrawer({openDrawerState, closeFunction}){
         })}
         </div>
         
-    <div className="add-to-cart-button-container">
+    {/* <div className="add-to-cart-button-container">
         <button>Continue</button>
-    </div>
+    </div> */}
 
     </div>
        

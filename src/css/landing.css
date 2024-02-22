@@ -87,7 +87,7 @@
 .landing-page-bottom{
     background-color: #111010;
     padding: 50px 15px;
-    width: 100vw;
+    /* width: 100vw; */
 }
 .footer-container-tagline{
     width:80%;
@@ -105,7 +105,7 @@
     height: 40px;
     margin-top: 15px;
     background-color: #1F1E1E;
-    width: 91.7%;
+    width: 99.7%;
     border-radius: 4px;
 }
 .contact-us-profile p{

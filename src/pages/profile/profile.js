@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
 import { LOCALSTORAGEAUTHKEY, LOCALSTORAGEPROFILEKEY } from "../../config";
 import { useNavigate } from "react-router-dom";
-import { registerUser, registerUserProfile } from "../../store/user";
+import { registerUser, registerUserProfile, resetProfile, resetUser } from "../../store/user";
 export function Profile (){
     const profileState = useSelector(state=>state.user.profile);
     const userState = useSelector(state=>state.user.user);
@@ -126,8 +126,11 @@ export function Profile (){
                 <div className="logout-icon-text" onClick={()=>{
                     let res = window.confirm('Are you sure you want to log out?')
                     if (res){
-                        localStorage.clear()
-                        navigate('/auth/signin')
+                        localStorage.clear();
+                        
+                        dispatch(resetUser());
+                        dispatch(resetProfile());
+                        navigate('/auth/signin');
                     }
                     return
                 }}>

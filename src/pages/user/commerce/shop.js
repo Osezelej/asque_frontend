@@ -169,7 +169,10 @@ export function Shop(){
             <div className="shop-header-container">
                 <div className="basket-section" onClick={()=>{
                     // console.log(JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)))
-                    if (JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)).length === 0){
+                    if(JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)) === null){
+                        return ;
+                    }
+                    if (JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY))?.length === 0){
                     return ;
                 }
                     navigate('/market/cart')}}>

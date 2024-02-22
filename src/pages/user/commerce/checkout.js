@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { LOCALSTORAGECARTKEY } from '../../../config';
 import { addTocart, adjustItemPrice, removeFromCart } from '../../../store/cart';
+import { ErrorDialogComp } from '../../../components/errorDialogComp';
+import { ClipLoader } from 'react-spinners';
 
 function CartItem({image, title, price, id,}){
     const [num, setNum] = useState(1)
@@ -49,11 +51,25 @@ function CartItem({image, title, price, id,}){
 }
 
 export function Checkout(){
+    const userAddress = useSelector(state=>state.user.address);
     const navigate = useNavigate();
     const cartData = useSelector(state=>state.cart.cartData)
     const dispatch = useDispatch();
     const [data_, setData_] = useState(0)
     const [total, setTotal] = useState(0)
+
+    const [activityIndicator, setActivityIndicator] = useState(false)
+
+
+    const [errorMessage, setErrorMessage] = useState({
+        title:"",
+        type:"",
+        command:[],
+        content:"",
+        keyword:"",
+
+    });
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(()=>{
         
@@ -62,9 +78,7 @@ export function Checkout(){
             if(data_ == 0){
                 let data = JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY));
                 if(data){
-                    console.log(data)
                     data.forEach(element => {
-                        
                         dispatch(addTocart(element))
                     });
                 }
@@ -82,6 +96,15 @@ export function Checkout(){
     
     
     return <div className="checkout-main-container home-page-body">
+    <ErrorDialogComp
+        content={errorMessage.content}
+        title={errorMessage.title}
+        commands={errorMessage.command}
+        type={errorMessage.type}
+        contentKeyword={errorMessage.keyword}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+         />
         <div className="shop-header-container" style={{
             minHeight:80, 
             maxHeight:80
@@ -100,11 +123,22 @@ export function Checkout(){
                 })}
         </div>
         <div className='address-summary-container'>
-            <div className='delivery-address-container'>
+        {userAddress.length == 0 && <div className='delivery-address-container'>
+                <p className='title'>Enter your delivery Address</p>
+                {/* <p className='address'>141 Grace street, Lekki, Lagos, Nigeria</p> */}
+                <p className='change' onClick={()=>{
+                    navigate('/market/pickupLocation')
+                }}>Enter address here</p>
+            </div>}
+            {userAddress.length > 0 && <div className='delivery-address-container'>
                 <p className='title'>Delivery Address</p>
-                <p className='address'>141 Grace street, Lekki, Lagos, Nigeria</p>
-                <p className='change'>change address</p>
-            </div>
+                <p className='address'>{userAddress}</p>
+                <p className='change' onClick={()=>{
+                    
+                    navigate('/market/pickupLocation')
+                }}>change address</p>
+            </div>}
+            
             <div className='summary-container'>
                 <h5>Order Summary</h5>
                 <div className='summary-details-container'>
@@ -115,7 +149,23 @@ export function Checkout(){
                 </div>
             </div>
             <div className="add-to-cart-button-container">
-            <button onClick={()=>navigate('/market/checkout')}>Proceed</button>
+            <button onClick={()=>{
+                 if(userAddress.length == 0){
+                             setErrorMessage({
+                                title:"No Address",
+                                content:'no pick up location was entered. ',
+                                keyword:'Enter a pickup location.',
+                                type:'warning',
+                                command:['okay']
+                            })
+                            return setOpenModal(true)
+                        }
+                        setActivityIndicator(true)
+                        setTimeout(()=>{
+                         navigate('/market/checkout')
+
+                        }, 1200)}}>{activityIndicator ? <ClipLoader color='white' size={15} />:
+                'Proceed'}</button>
         </div>
         </div>
         

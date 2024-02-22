@@ -27,6 +27,7 @@ import { ProfileDetails } from './pages/creator/profileDetails';
 import { EditProfileDetail } from './pages/creator/editProfileDetail';
 import { Community } from './pages/user/commerce/community';
 import { Signas } from './pages/auth/signas';
+import { DeliveryLocation } from './pages/user/commerce/deliveryLocation';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route path='/creator/submit/story' element={<CreateStories/>}/>
         <Route path='/creator/published' element={<ViewedPublished/>}/>
         <Route path='/community/:user' element={<Community/>}/>
+        <Route path='/market/pickupLocation' element={<DeliveryLocation />} />
       </Routes>
     </BrowserRouter>);
 }

@@ -10,6 +10,7 @@ import landing3 from '../../assets/landing3.png';
 import landing4 from '../../assets/landing4.png';
 import { useNavigate } from 'react-router-dom';
 import '../../css/landing.css'
+import { useState } from 'react';
 export function Home(){
     const navigate = useNavigate();
 
@@ -41,10 +42,28 @@ export function Home(){
             taglineDesc:"Connect with a community of fellow Africa enthusiasts"
         }
     ]
-
+    const [reRender, setReRender] = useState(true)
+    window.addEventListener('resize', ()=>{
+        setReRender(reRender ? false : true)
+    })
+    if(window.screen.width > 480 ){
+        return <div style={{
+            width:'100%',
+            display:'flex',
+            alignItems:'center',
+            justifyContent:'center',
+            height:'100vh',
+            flexDirection:'column'
+        }}>
+            <h1 >Asque Desktop version is comming soon!</h1>
+            <p>Get the best experience by joining with your mobile device.</p>
+        </div>
+    }
     return<div>
-         <div className="landing-page-main-body home-page-body">
-            <div style={{overflowY:'scroll'}}>
+         <div className="landing-page-main-body home-page-body" style={{
+            overflowX:'hidden'
+         }}>
+            <div style={{overflowY:'scroll', overflowX:'hidden'}}>
                 <div className="landing-page-header" style={{
                     height:90,
                     display:'flex',
@@ -104,7 +123,7 @@ export function Home(){
             </div>
             
     </div>
-    <div className='landing-page-bottom'>
+    <div className='landing-page-bottom' >
                 <div className='footer-container-tagline'>
                     <p>Let{"'"}s stay connected, connect with us through our handles</p>
                 </div>
