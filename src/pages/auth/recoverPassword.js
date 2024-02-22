@@ -88,4 +88,6 @@ export function RecoverPassword(){
             </div>
     
         </div>)
-}
+
+        
+}   

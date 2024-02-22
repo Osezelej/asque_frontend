@@ -222,7 +222,7 @@ export function Shop(){
         height:'100vh',
         flexWrap:'wrap',
         rowGap:25,
-        columnGap:20}}>
+        columnGap:10}}>
 
 {
     imagesArray.map((value, index)=><div className='shop-body-content-item-container' key={index} >

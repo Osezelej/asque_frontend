@@ -10,6 +10,7 @@ import { addTocart, adjustItemPrice, removeFromCart } from '../../../store/cart'
 import { ErrorDialogComp } from '../../../components/errorDialogComp';
 import { ClipLoader } from 'react-spinners';
 
+
 function CartItem({image, title, price, id,}){
     const [num, setNum] = useState(1)
     let [_price, setPrice] = useState(price);
@@ -86,6 +87,7 @@ export function Checkout(){
                 
             }
         }
+        console.log(cartData)
         let amount = 0
         cartData.forEach((value)=>{
             amount += value.price * value.itemNum 
@@ -94,7 +96,9 @@ export function Checkout(){
         
     }, [cartData])
     
-    
+
+
+
     return <div className="checkout-main-container home-page-body">
     <ErrorDialogComp
         content={errorMessage.content}
@@ -123,16 +127,16 @@ export function Checkout(){
                 })}
         </div>
         <div className='address-summary-container'>
-        {userAddress.length == 0 && <div className='delivery-address-container'>
+        {userAddress.addr.length == 0 && <div className='delivery-address-container'>
                 <p className='title'>Enter your delivery Address</p>
                 {/* <p className='address'>141 Grace street, Lekki, Lagos, Nigeria</p> */}
                 <p className='change' onClick={()=>{
                     navigate('/market/pickupLocation')
                 }}>Enter address here</p>
             </div>}
-            {userAddress.length > 0 && <div className='delivery-address-container'>
+            {userAddress.addr.length > 0 && <div className='delivery-address-container'>
                 <p className='title'>Delivery Address</p>
-                <p className='address'>{userAddress}</p>
+                <p className='address'>{`${userAddress.addr}, ${userAddress.city}, ${userAddress.country}.`}</p>
                 <p className='change' onClick={()=>{
                     
                     navigate('/market/pickupLocation')
@@ -150,7 +154,7 @@ export function Checkout(){
             </div>
             <div className="add-to-cart-button-container">
             <button onClick={()=>{
-                 if(userAddress.length == 0){
+                 if(userAddress.addr.length == 0){
                              setErrorMessage({
                                 title:"No Address",
                                 content:'no pick up location was entered. ',

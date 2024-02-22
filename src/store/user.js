@@ -74,12 +74,22 @@ const userSlice = createSlice({
               websiteUrl:"",
               initials:""
           },
-          address:''
+          address:{
+            addr:'',
+            city:'',
+            zip:'',
+            country:'',
+            referrerCOde:''
+          }
     },
     reducers:{
 
       registerUserAddress(state, {payload}){
-        state.address = payload;
+        state.address.addr = payload.addr;
+        state.address.city = payload.city;
+        state.address.country = payload.country;
+        state.address.referrerCOde = payload.referrerCOde;
+        state.address.zip = payload.zip
       },
 
       registerUser(state, {payload}){
