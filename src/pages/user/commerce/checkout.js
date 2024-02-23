@@ -146,7 +146,7 @@ export function Checkout(){
             <div className='summary-container'>
                 <h5>Order Summary</h5>
                 <div className='summary-details-container'>
-                {[...cartData, {title:'Tax & fees', price:total, itemNum:1}].map((value, index)=><div key={index}>
+                {[...cartData, {title:'Tax & fees', price: total + (total * 0.2), itemNum:1}].map((value, index)=><div key={index}>
                         <p>{value.title}</p>
                         <p>${value.price * value.itemNum}</p>
                     </div>)}

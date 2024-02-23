@@ -103,14 +103,17 @@ export function SignIn(){
                 contentKeyword={errorMessage.keyword}
             />
             <div className="shop-header-container" style={{
-                        minHeight:150,
+                        height:70,
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'space-evenly',
                         padding:15
                     }}>
                         <AuthHeader />
-                        <h2 style={{marginTop:15}}>Welcome back</h2>
+                        <h2 style={{marginTop:0}} >Welcome back</h2>
             </div>     
             <div className="signUp-body">
-                <div className="signup-field-container">
+                <div className="signup-field-container" >
                     <div className="signup-label-input-container">
                         <p>Your Email</p>
                         <input 
@@ -119,6 +122,7 @@ export function SignIn(){
                         placeholder="Enter your email"
                         value={userData.email}
                         onChange={(e)=>{handleUserData(e.target.name, e.target.value)}}
+                        style={{minHeight:45}}
                         />
                     </div>
                     <PasswordComp labelText={'Enter password'}

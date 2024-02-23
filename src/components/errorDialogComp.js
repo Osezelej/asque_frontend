@@ -4,7 +4,7 @@ import ModalIcon from '../assets/unsuccess.png';
 import SuccessModalIcon from '../assets/successReceipt.png';
 
 
-export function ErrorDialogComp ({content, contentKeyword, title, commands, type, openModal, setOpenModal, feedbackFunction}){
+export function ErrorDialogComp ({content, contentKeyword, title, commands, type, openModal, setOpenModal, feedbackFunction, link}){
     
    
     
@@ -47,7 +47,7 @@ export function ErrorDialogComp ({content, contentKeyword, title, commands, type
                     marginLeft:15,
                     marginRight:15
                 }}>
-                   {content} <b>{contentKeyword}</b>
+                  {link && <a href={link} target='_blank'><b>click here</b></a>} {content} <b>{contentKeyword}</b>
                 </p>
             </div>
             <div className='modal-action-button-container' style={{

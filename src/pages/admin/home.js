@@ -342,13 +342,13 @@ export function AdminHome(){
                                     
                     }
                 </div>
-                <div className='search-icon-name-container'>
+                {/* <div className='search-icon-name-container'>
                         <SearchRounded style={{
                             height:25.5,
                             width:25.5
                         }}/>
                         <input type='text' placeholder='Search'/>
-                    </div>
+                    </div> */}
                     { loadingdata && <div style={{
                         height:'100vh',
                         width:'98vw',

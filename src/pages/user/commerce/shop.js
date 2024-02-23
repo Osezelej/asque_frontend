@@ -166,7 +166,9 @@ export function Shop(){
 
         <div style={{overflowY:'scroll'}}>
 
-            <div className="shop-header-container">
+            <div className="shop-header-container" style={{
+                height:80
+            }}>
                 <div className="basket-section" onClick={()=>{
                     // console.log(JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)))
                     if(JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)) === null){
@@ -199,13 +201,13 @@ export function Shop(){
                 </div>
                 <div className="page-name-search-section">
                     <h1>Marketplace</h1>
-                    <div className='search-icon-name-container'>
+                    {/* <div className='search-icon-name-container'>
                         <SearchRounded style={{
                             height:25.5,
                             width:25.5
                         }}/>
                         <input type='text' placeholder='Search'/>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             
