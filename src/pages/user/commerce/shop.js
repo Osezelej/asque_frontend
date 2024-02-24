@@ -167,7 +167,7 @@ export function Shop(){
         <div style={{overflowY:'scroll'}}>
 
             <div className="shop-header-container" style={{
-                height:80
+                minHeight:80
             }}>
                 <div className="basket-section" onClick={()=>{
                     // console.log(JSON.parse(localStorage.getItem(LOCALSTORAGECARTKEY)))
