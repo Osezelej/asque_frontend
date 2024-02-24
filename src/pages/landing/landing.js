@@ -101,7 +101,10 @@ export function Home(){
                 </div>
                 <div className='landing-main-content-container'>
                     {
-                        landingArray.map((value, key)=><div className='landing-content-container' key={key}>
+                        landingArray.map((value, key)=><div className='landing-content-container' key={key} style={{
+                            marginTop:50,
+                            marginBottom:120
+                        }}>
                             <div className='landing-image-container'>
                                 <img src={value.image} alt=''/>
                             </div>

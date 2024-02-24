@@ -47,6 +47,19 @@ export function SignIn(){
             dispatch(userThunk(data.data.data.accessToken))
         }).catch((error)=>{
             console.log(error)
+            if (error.message === 'Network Error'){
+                setErrorMessage((prev)=>{
+                    return {
+                        command:['okay'],
+                        content:"NETWORK ERROR",
+                        keyword:"",
+                        type:"warning",
+                        title:"Error!"
+                    }
+                })
+                localStorage.clear();
+                return setOpenError(true)
+            }
             setErrorMessage((prev)=>{
                 return {
                     command:['okay'],

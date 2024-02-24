@@ -256,7 +256,7 @@ export function MarketHome(){
             }
             </div>}
             <div className="home-explore-main-section">
-                <h3>Explore photo collector and story</h3>
+                <h3>Explore photo Collection and story</h3>
                 {loadingdata ? <div style={{   height:'100vh',
                         width:'98vw',
                         padding:'50px 0',

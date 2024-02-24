@@ -89,7 +89,9 @@ export function SignUp(){
          // eslint-disable-next-line 
     }, [openError])
     return (
-    <div  className="signup-container">
+    <div  className="signup-container" style={{
+        height:'120%'
+    }}>
         <ErrorDialogComp
             commands={errorMessage.command}
             content={errorMessage.content}
