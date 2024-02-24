@@ -95,8 +95,11 @@ export function MarketHome(){
                 type:"warning",
                 command:['okay'],
             })
-            
             setOpenError(true)
+            dispatch(resetUser())
+            dispatch(resetProfile())
+            localStorage.clear()
+            navigate('/auth/signin')
         })
     }
 
@@ -114,6 +117,10 @@ export function MarketHome(){
             setIsDone(true)
         }).catch((err)=>{
             console.log(err)
+            dispatch(resetUser())
+            dispatch(resetProfile())
+            localStorage.clear()
+            navigate('/auth/signin')
         })
     }
 
@@ -132,6 +139,10 @@ export function MarketHome(){
             setImagesArray([...imagesArray, ...value.data.data])
         }).catch((err)=>{
             console.log(err)
+            dispatch(resetUser())
+            dispatch(resetProfile())
+            localStorage.clear()
+            navigate('/auth/signin')
         }).finally(()=>{
             setLoadingData(false)
             setIsDone(false)
@@ -228,8 +239,8 @@ export function MarketHome(){
             {
                 trendingData.map((value, index)=> <div className="home-image-item-container" key={index}>
                     <div>
-                       {!loadingdata && <img alt=""  src={value.imageUris[0]} height={130} width={130} style={{
-                        borderRadius:5
+                       {!loadingdata && <img alt=""  src={value.imageUris[0]} height={137} width={125} style={{
+                        borderRadius:6
                        }}/>} 
                         <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
                     </div>

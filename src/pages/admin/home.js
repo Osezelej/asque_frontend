@@ -7,7 +7,7 @@ import '../../css/admin.css';
 import { ErrorDialogComp } from '../../components/errorDialogComp';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { profileThunk } from '../../store/user';
+import { profileThunk, resetProfile, resetUser } from '../../store/user';
 import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
 import BACKEND_URL, {LOCALSTORAGEACCESSTOKENKEY} from '../../config';
@@ -54,6 +54,10 @@ export function AdminHome(){
                 type:'warning'
             });
             setOpenModal(true)
+            dispatch(resetUser())
+            dispatch(resetProfile())
+            localStorage.clear()
+            navigate('/auth/signin')
         }).finally(()=>{
             setLoadingData(false)
         })
@@ -87,7 +91,7 @@ export function AdminHome(){
 
     })
  // eslint-disable-next-line 
-    const [trendingData, setTrandingData] = useState([1,2,3,4,54,5,6,7,3,3]);
+    const [trendingData, setTrandingData] = useState([]);
     let [imagesArray , setImageArray]= useState([]);
     const [albumContent, setAlbumContent] = useState([]);
     const [storyContent, setStoriesContent] = useState([]);
@@ -106,6 +110,32 @@ export function AdminHome(){
     const [activityIndicator, setActivityIndicator] = useState(false);
 
 
+
+    async function getArtwork(){
+        setLoadingData(true);
+        const accessToken = localStorage.getItem(LOCALSTORAGEACCESSTOKENKEY);
+        await axios.get(BACKEND_URL + '/artwork/newest', {
+            headers:{
+                Authorization:`Bearer ${accessToken}`
+            }
+        }).then((value)=>{
+            // console.log(value.data.data);
+            setTrandingData(value.data.data);
+            
+        }).catch((err)=>{
+            console.log(err)
+            setErrorMessage({
+                title:"Error!",
+                content:"An error occured while trying to get artWork",
+                keyword:", try signing in again",
+                type:"warning",
+                command:['okay'],
+            })
+            
+            setOpenModal(true)
+        })
+    }
+
     useEffect(()=>{
         if(!profileState.loading && !profileState.error && !profileState.fufilled){
             console.log(profileState)
@@ -118,8 +148,11 @@ export function AdminHome(){
                 content:"An error occured while trying to get profile details",
                 keyword:", try signing in again",
                 type:"warining",
-                command:['okay'],
+                command:['sign in'],
             })
+            dispatch(resetUser())
+            dispatch(resetProfile())
+            localStorage.clear()
             navigate('/auth/signin')
         }
         if(!profileState.loading){
@@ -131,7 +164,7 @@ export function AdminHome(){
 
     useEffect(()=>{
         if(chosenContent.store){
-            
+        getArtwork()
         getPublishedData('artwork', categoryData.page).then((value)=>{
             if (value){
                 console.log(value.data)
@@ -269,14 +302,16 @@ export function AdminHome(){
             
            {trendingData.map((value, index)=> <div className="home-image-item-container" key={index}>
                     <div>
-                        <img alt="artwork"  src={trending1}/>
+                    {!loadingdata && <img alt=""  src={value.imageUris[0]} height={137} width={125} style={{
+                        borderRadius:6
+                       }}/>}
                     </div>
-                    <div>
+                    {/* <div>
                         <img alt=""  src={trending2}/>
                     </div>
                     <div>   
                         <img alt=""  src={trending3}/>
-                    </div>
+                    </div> */}
                 </div>)
             } 
             </div>}
