@@ -109,12 +109,15 @@ export function SignUp(){
                         <AuthHeader />
                         
                         <h2 style={{marginTop:10}}>Sign up</h2>
-                        {role === 'creator' && <p style={{
+                       
+                </div>     
+                {role === 'creator' && <p style={{
                             marginTop:10,
-                            fontWeight:'300'
+                            fontWeight:'300',
+                            paddingLeft:15,
+                            paddingRight:15
 
                         }}>A global audience is eager to know. Share your thoughts. Kindly add (your)</p>}
-                </div>     
         <div className="signUp-body">
             <div className="signup-field-container">
                 <div className="signup-label-input-container">
@@ -138,7 +141,7 @@ export function SignUp(){
                     onChange={(e)=>{handleUserData(e.target.name, e.target.value)}}
                     />
                 </div>
-                <div className="signup-label-input-container">
+                {/* <div className="signup-label-input-container">
                     <p>Referal code{"(optional)"}</p>
                     <input 
                     type="text" 
@@ -147,7 +150,7 @@ export function SignUp(){
                     value={userData.referalCode}
                     onChange={(e)=>{handleUserData(e.target.name, e.target.value)}}
                     />
-                </div>
+                </div> */}
                 <PasswordComp  
                 labelText={'Create password'} 
                 fieldName="password"
