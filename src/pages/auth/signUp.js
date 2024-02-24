@@ -105,7 +105,13 @@ export function SignUp(){
                         padding:15
                     }}>
                         <AuthHeader />
-                        <h2 style={{marginTop:15}}>Sign up</h2>
+                        
+                        <h2 style={{marginTop:10}}>Sign up</h2>
+                        {role === 'creator' && <p style={{
+                            marginTop:10,
+                            fontWeight:'300'
+
+                        }}>A global audience is eager to know. Share your thoughts. Kindly add (your)</p>}
                 </div>     
         <div className="signUp-body">
             <div className="signup-field-container">
@@ -160,7 +166,7 @@ export function SignUp(){
                                     type:"warning",
 
                                     }
-                            })
+                            });
                             return setOpenError(true)
                             
                         }

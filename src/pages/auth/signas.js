@@ -3,19 +3,19 @@ import { AuthHeader } from "../../components/authHeader";
 import { ProfileItem } from "../../components/profileItem";
 export function Signas(){
     const iconArray = [
-        {
-            leadingIcon:CameraAltRounded,
-            title:'A Creator',
-            subText:'Sign up as a creator',
-            link:'/auth/signup/creator'
-        },
+       
         {
             leadingIcon:Person2Rounded,
             title:'A user',
             subText:'Discover stories and artwork',
             link:'/auth/signup/user'
         },
-        
+        {
+            leadingIcon:CameraAltRounded,
+            title:'A Creator',
+            subText:'Sign up as a creator',
+            link:'/auth/signup/creator'
+        },
       
     ]
     return <div className="signas-main-body-container home-page-body">

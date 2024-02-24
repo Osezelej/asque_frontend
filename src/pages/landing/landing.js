@@ -127,18 +127,28 @@ export function Home(){
                 <div className='footer-container-tagline'>
                     <p>Let{"'"}s stay connected, connect with us through our handles</p>
                 </div>
-                <div className='contact-us-profile'>
-                    <p>Linkedin</p>
-                </div>
-                <div className='contact-us-profile'>
-                    <p>Email</p>
-                </div>
-                <div className='contact-us-profile'>
-                    <p>Instagram</p>
-                </div>
-                <div className='contact-us-profile'>
-                    <p>twiter</p>
-                </div>
+                <a href={'https://www.linkedin.com/company/asqueafrica/'} target="_blank">
+                    <div className='contact-us-profile'>
+                        <p>Linkedin</p>
+                    </div>
+                </a>
+                <a href={'mailto:asqueinc@gmail.com'} target="_blank">
+                    <div className='contact-us-profile'>
+                        <p>Email</p>
+                    </div>
+                </a>
+                <a href={'https://www.instagram.com/asque__africa?igsh=cHJib3JiZmVlMW9r'} target="_blank">
+                    <div className='contact-us-profile'>
+                        <p>Instagram</p>
+                    </div>
+                </a>
+                <a href={'https://twitter.com/AsqueAfrica?t=oDLeF8RI--3Mo0pLAqi07w&s=09'} target="_blank">
+                    <div className='contact-us-profile'>
+                        <p>twiter</p>
+                    </div>
+                </a>
+                
+                
             </div>
     </div>
 }

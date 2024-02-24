@@ -225,7 +225,7 @@ export function CreateStories(){
                             <input 
                             type="text" 
                             name="title" 
-                            placeholder="Enter your name"
+                            placeholder="Enter title"
                             value={storyData.title}
                             onChange={(e)=>{
                                 setStoryData((prev)=>({...prev, title:e.target.value}))

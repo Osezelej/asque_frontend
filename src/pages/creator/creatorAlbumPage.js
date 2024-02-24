@@ -223,7 +223,7 @@ export function CreatorAlbum(){
                                 value={albumData.title} 
                                 type="text" 
                                 name="title" 
-                                placeholder="Enter your name"
+                                placeholder="Enter title"
                                 onChange={(e)=>{
                                     setAlbumData((prev)=>{
                                         return {...prev, title:e.target.value}
