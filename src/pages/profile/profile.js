@@ -20,13 +20,13 @@ export function Profile (){
             type:'c'
 
         },
-        {
-            leadingIcon:Key,
-            title:'Change password',
-            subText:'Password your account',
-            link:'/auth/resetPassword',
-            type:'a'
-        },
+        // {
+        //     leadingIcon:Key,
+        //     title:'Change password',
+        //     subText:'Password your account',
+        //     link:'/auth/resetPassword',
+        //     type:'a'
+        // },
         {
             leadingIcon:HelpCenterRounded,
             title:'Support',
@@ -38,7 +38,7 @@ export function Profile (){
             leadingIcon:MenuBookRounded,
             title:'Terms & Conditions',
             subText:'About our contract with you',
-            link:'/TC',
+            link:'https://shorturl.at/eolZ1',
             type:'a'
         },
         {
