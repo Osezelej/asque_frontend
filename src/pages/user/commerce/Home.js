@@ -112,7 +112,7 @@ export function MarketHome(){
                 Authorization:`Bearer ${accessToken}`
             }
         }).then((value)=>{
-            // console.log(value.data.data)
+            console.log(value.data.data)
             setImagesArray([...imagesArray, ...value.data.data])
             setIsDone(true)
         }).catch((err)=>{
@@ -268,8 +268,8 @@ export function MarketHome(){
                 <div className="home-photo-mainbody">
                     {imagesArray.map((value)=> {
                         return <div className="home-photo-mainbody-item">
-                            {!loadingdata && value.albumImageUris !== undefined && <img style={{borderRadius:7}} src={value.albumImageUris[0]} width={156} height={190} alt=''/>}
-                            {!loadingdata && value.albumImageUris === undefined && <img style={{borderRadius:7}} src={value.secondImage} width={156} height={190} alt=''/>}
+                            {!loadingdata && value.albumImageUris !== undefined && <img style={{borderRadius:7}} src={value.albumImageUris[0]} width={156} height={190} alt='' onClick={()=>{navigate('/collection/album?aid=' + value.id)}}/>}
+                            {!loadingdata && value.albumImageUris === undefined && <img style={{borderRadius:7}} src={value.secondImage} width={156} height={190} alt='' onClick={()=>{navigate('/collection/story/' + value.title + '?sid=' +value.id)}}s/>}
                             <div className="text-structurecontainer">
                                 <p>{value.title}</p>
                             </div>

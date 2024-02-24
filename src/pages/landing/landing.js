@@ -86,15 +86,14 @@ export function Home(){
                 </div>
                 <div className='landing-hero-section'>
                     <div className='company-name-desc-container'>
-                        <h1>ASQUE</h1>
-                        <p>Discover, explore and interact with africa's cultural, social, and societal landscape</p>
+                        <h1 className='dm-serif'><display-regular>ASQUE</display-regular> </h1>
+                        <p >Discover, explore and interact with africa's cultural, social, and societal landscape</p>
                     </div>
                     <div className='header-carousel-container'>
-                        <Carousel>
+                        <Carousel animation='slide' >
                             { imageArray.map((value)=><div className='header-carousel-image-container'>
-                                <img src={image4} alt='carousel1'/>
-                                <img src={image3} alt='carousel2'/>
-                                <img src={image2} alt='carousel3'/>
+                                <img src={image4} alt='carousel1' width={180} height={180}/>
+                                <img src={image3} alt='carousel2' width={180} height={180}/>
                             </div>)}
                         </Carousel>
                     </div>

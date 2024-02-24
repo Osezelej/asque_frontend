@@ -12,7 +12,8 @@ import { ClipLoader } from 'react-spinners';
 import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY } from '../../../config';
 import axios from 'axios';
 import { ErrorDialogComp } from '../../../components/errorDialogComp';
-
+import { SnackBar } from '../../../components/snackBar';
+import { FRONTEND_URL } from '../../../config';
 
 export function AlbumDesc(){
     const imageArray = [image1, image2, trending1, trending2, trending3];
@@ -35,6 +36,18 @@ export function AlbumDesc(){
     keyword:""
    })
    const [openError, setOpenError] = useState(false);
+   const [snackState, setSnackState] = useState(false)
+
+   function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            console.log('Text copied to clipboard:', text);
+            setSnackState(true)
+        })
+        .catch(err => {
+            console.error('Failed to copy text:', err);
+        });
+}
 
    
    const date = new Date(artDetail.updatedAt);
@@ -74,8 +87,18 @@ export function AlbumDesc(){
     }, [])
 
     
+    useEffect(()=>{
+        if(snackState){
+            setTimeout(()=>{
+                setSnackState(false)
+            }, 1000)
+        }
+    }, [snackState])
+
 
     return <div className='detail-desc-main-container home-page-body'>
+    
+    <SnackBar text={'Url coppied'} onState={snackState} closeState={()=>setSnackState(false)}/>
                 <ErrorDialogComp 
                      content={errorMessage.content} 
                     title={errorMessage.title}
@@ -99,7 +122,18 @@ export function AlbumDesc(){
                       
                     </div>
                     <div className='collection-main-body'>
-                        {artDetail && <Carousel>
+                        {artDetail && <Carousel 
+                        autoPlay={false}
+                        animation='slide'
+                        navButtonsAlwaysVisible = {true}
+                        navButtonsProps={{
+                            style:{
+                                color:'white',
+                                backgroundColor:'white'
+                            }
+                        }}
+
+                        >
                             {
                                 artDetail.albumImageUris.map((value, index)=><div className='collection-detail-image-container' key={index}>
                                     <img src={value} alt=''/>
@@ -113,13 +147,18 @@ export function AlbumDesc(){
                             <p className='creator'>creator:{artDetail.profile.name}</p>
                             <p className='publish'>published: {month[date.getMonth()] +' '+ date.getDay() + ', ' + date.getFullYear()}</p>
                         </div>
-                        <div className='like-share-button-container'>
-                            <button className='like-button'>
+                        <div className='like-share-button-container' style={{justifyContent:'flex-end'}}>
+                            {/* <button className='like-button'>
                             <img src= {like} height={14} width={17}/>
-                            </button>
-                            <button className='share-button'>
+                            </button> */}
+                            <button className='share-button' onClick={()=>{
+                                const textToCopy = FRONTEND_URL + '/collection/album?aid=' + artDetail.id;
+                                copyToClipboard(textToCopy);
+                                
+                            }}>
                                 <img src={share} height={15}
                                     width={15}
+
                                 />
                             </button>
                         </div>

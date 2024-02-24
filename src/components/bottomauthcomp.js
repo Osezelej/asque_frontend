@@ -6,7 +6,9 @@ export function BottomAuthComp({activityIndicator,navigateFunction,actionTextDes
     
     const navigate = useNavigate()
     return <div className="bottom-comp-container">
-        <button className="auth-button" onClick={()=>navigateFunction()}>
+        <button style={{
+            height:48
+        }} className="auth-button" onClick={()=>navigateFunction()}>
                 {activityIndicator ? <ClipLoader color='white' size={25}/> :authButtonText}
         </button>
         {/* <button className="outline-auth-button-container" style={{
