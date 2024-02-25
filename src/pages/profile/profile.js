@@ -38,7 +38,7 @@ export function Profile (){
             leadingIcon:MenuBookRounded,
             title:'Terms & Conditions',
             subText:'About our contract with you',
-            link:'https://shorturl.at/eolZ1',
+            link:'https://www.notion.so/Asque-Terms-of-Service-faaf9765478048bf83014b1eb3183b6f',
             type:'a'
         },
         {

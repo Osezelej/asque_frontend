@@ -25,7 +25,7 @@ export function Home(){
         },
         {
             image:landing2,
-            preTagline:'Also get to seamlessly',
+            preTagline:'Conveniently',
             tagline:'Shop',
             taglineDesc:"Discover and shop the best of African art from a repository of premium sculptures, canvas paintings, photographs, and more"
         },
@@ -37,7 +37,7 @@ export function Home(){
         },
         {
             image:landing4,
-            preTagline:'And have access to',
+            preTagline:'And access',
             tagline:'Community',
             taglineDesc:"Connect with a community of fellow Africa enthusiasts"
         }
@@ -102,9 +102,13 @@ export function Home(){
                     {
                         landingArray.map((value, key)=><div className='landing-content-container' key={key} style={{
                             marginTop:50,
-                            marginBottom:120
+                            marginBottom:130
                         }}>
-                            <div className='landing-image-container'>
+                            <div className='landing-image-container' style={{
+                                width:'100%',
+                                display:'flex',
+                                justifyContent:'center'
+                            }}>
                                 <img src={value.image} alt=''/>
                             </div>
                             <div className='preTagline-tagline-tagline-desc-container'>

@@ -126,10 +126,14 @@ export function AlbumDesc(){
                         autoPlay={false}
                         animation='slide'
                         navButtonsAlwaysVisible = {true}
+                        
                         navButtonsProps={{
                             style:{
                                 color:'white',
-                                backgroundColor:'white'
+                                backgroundColor:'transparent',
+                                stroke:'white',
+                                fill:'white',
+                                
                             }
                         }}
 

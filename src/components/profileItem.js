@@ -59,10 +59,10 @@ export function ProfileItem({role, LeadingIcon, textTitle, subTextTitle, link, f
     </div>
     {
             click && <div>
-                <p style={{marginBottom:20,fontWeight:'bold'}} onClick={()=>navigate('/creator/submit/album')}>Album</p>
-                <p style={{ fontWeight:'bold'}} onClick={()=>navigate('/creator/submit/artwort')}>For sale</p>
+                <p style={{marginBottom:30,fontWeight:'bold', padding:5, textDecoration:'underline'}} onClick={()=>navigate('/creator/submit/album')}>Album <br/> <p style={{fontSize:10}}>Not for sale</p></p>
+                <p style={{ fontWeight:'bold', padding:5, textDecoration:'underline'}} onClick={()=>navigate('/creator/submit/artwort')}> Artwork <br/> <p style={{fontSize:10}}>For sale</p></p>
             </div>
-        }
+        } 
     </div> : <div className="Profile-item-container" onClick={()=>handleClick()}>
         <div className="icon-text-container">
             <div className="icon-container">

@@ -29,12 +29,19 @@ export function Signas(){
         </div>
         <div className="profile-detail-item-container">
             {
-                iconArray.map((value)=><ProfileItem 
-                    LeadingIcon={value.leadingIcon}
-                    textTitle={value.title}
-                    subTextTitle={value.subText}
-                    link={value.link}
-                />)
+                iconArray.map((value)=>
+                <div style={{
+                    width:'100%',
+                    marginTop:10,
+                    marginBottom:30
+                }}>
+                    <ProfileItem 
+                        LeadingIcon={value.leadingIcon}
+                        textTitle={value.title}
+                        subTextTitle={value.subText}
+                        link={value.link}
+                    />
+                </div>)
             }
             </div>
 

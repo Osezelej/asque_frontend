@@ -131,7 +131,7 @@ useEffect(()=>{
                             <img src={like} height={15} width={17}/>
                         </button> */}
                         <button className='share-button' onClick={()=>{
-                    const textToCopy = FRONTEND_URL + '/market/detail/artwork?sid=' +  artDetail.id;
+                    const textToCopy = FRONTEND_URL + '/collection/story/' + artDetail.title + '?sid=' +  artDetail.id;
                     copyToClipboard(textToCopy);
                 }}>
                             <img src={share} alt=''/>
