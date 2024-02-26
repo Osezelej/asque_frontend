@@ -117,7 +117,7 @@ export function AlbumDesc(){
         }}>
             <ClipLoader color='#BE774C' size={35}/>
         </div>}
-                {!loadingState && artDetail  && <div style={{overflowY:'scroll', paddingBottom:100}}>
+                {!loadingState && artDetail  && <div style={{overflowY:'scroll', paddingBottom:100, }}>
                     <div className="collection-main-header">
                       
                     </div>

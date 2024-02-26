@@ -435,9 +435,7 @@ export function AdminHome(){
                                         setOpenModal(true);
 
                                        
-                                }}>
-                                Delete Now 
-                                </button>
+                                }}>Delete Now</button>
                             </div>
 
                     </div>)
@@ -492,7 +490,7 @@ export function AdminHome(){
                                         setOpenModal(true);
                                        
                                 }}
-                                >Delete Now </button>
+                                >Delete Now</button>
                             </div>
 
                     </div>)
@@ -532,7 +530,7 @@ export function AdminHome(){
                                             type:'warning'
                                         })
                                         
-                                        setOpenModal(true)}} >Delete Now </button>
+                                        setOpenModal(true)}} >Delete Now</button>
                                 </div>
                             </div>)}
                             {storyContent.length === 10 && <div className="add-to-cart-button-container" style={{width:'100%'}}>

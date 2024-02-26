@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import BACKEND_URL, { LOCALSTORAGEACCESSTOKENKEY } from '../../../config';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
+import rafki from '../../../assets/rafiki.png';
 
 export function Album(){
     const [imageArray, setImageArray] = useState([]);
@@ -138,9 +139,11 @@ export function Album(){
             }}
             >
                 <ClipLoader color='#BE774C' size={35} />
-            </div>:<div style={{overflowY:'scroll', marginBottom:0}}>
+            </div>:<div style={{overflowY:'scroll', marginBottom:0, height:'100vh'}}>
                         <div className="collection-main-header">
+                            
                             <div className="menu-title">
+                            
                                 {!isStory ? <p onClick={()=>setIsStory(false)} style={{
                                     color:'#BE774C', 
                                     fontWeight:'bold', 
@@ -162,6 +165,13 @@ export function Album(){
                             </div>
                         </div>
                        {!isStory && <div className='collention-body'>
+                       {albumContent.length === 0 && <div className="empty-content-display-container" style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', marginTop:20}}>
+                            <div className="empty-content-image-container">
+                                    <img src={rafki} alt=""/>
+                            </div>
+                            <p>no Album yet.</p>
+
+                        </div>}
                             {albumContent.map((value)=><div className='collection-item-container' >
                                 <div className='title-link-container'>
                                     <p className='title'>{value.title}</p>
@@ -173,6 +183,14 @@ export function Album(){
                             </div>)}
                         </div>} 
                        {isStory && <div className='Stories-body-container creator-detail-item-container '>
+
+                       {storyContent.length === 0 && <div className="empty-content-display-container" style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', marginTop:20}}>
+                            <div className="empty-content-image-container">
+                                    <img src={rafki} alt=""/>
+                            </div>
+                            <p>no Story yet.</p>
+
+                        </div>}
                             {storyContent.map((value)=><div className='stories-item-container ' onClick={()=>{
 
                                 navigate('/collection/story/' + value.title + '?sid=' +value.id)
