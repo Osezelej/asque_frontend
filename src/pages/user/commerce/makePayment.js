@@ -22,8 +22,8 @@ export function MakePayment(){
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Wema Bank/Blessed Onuoha</p>
-                        <p>2019820166</p>
+                        <p>Providus Bank/Blessed Onuoha</p>
+                        <p>1304909682</p>
                     </div>
                 </div>
                 <div className="make-payment-option">
