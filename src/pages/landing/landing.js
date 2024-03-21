@@ -1,5 +1,5 @@
 import Carousel from 'react-material-ui-carousel';
-import Africa from '../../assets/africa 1.png';
+import Africa from '../../assets/asqueAfrica.jpg';
 import image1 from '../../assets/image1.png';
 import image2 from '../../assets/image2.png';
 import image3 from '../../assets/image3.png';
@@ -70,11 +70,11 @@ export function Home(){
                     justifyContent:'center',
                     alignItems:'center'
                 }}>
-                    <div className="landing-header-image-signin-signup-container">
+                    <div className="landing-header-image-signin-signup-container" style={{width:'100%', backgroundColor:'white'}}>
                         <div className="header-image-container">
-                            <img src={Africa} height={26} width={25} alt='africa'/>
+                            <img src={Africa} height={100} width={100} alt='africa'/>
                         </div>
-                        <div className='auth-button-container'>
+                        <div className='auth-button-container' >
                             <button className='auth-outline-button' onClick={()=>navigate('/auth/signin')}>
                                 Sign in
                             </button>
@@ -86,7 +86,7 @@ export function Home(){
                 </div>
                 <div className='landing-hero-section'>
                     <div className='company-name-desc-container'>
-                        <h1 className='dm-serif'><display-regular>ASQUE</display-regular> </h1>
+                        {/* <h1 className='dm-serif'><display-regular>ASQUE</display-regular> </h1> */}
                         <p >Discover, explore and interact with africa's cultural, social, and societal landscape</p>
                     </div>
                     <div className='header-carousel-container'>
