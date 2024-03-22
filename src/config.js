@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://asque-media-7cug.onrender.com";
+const BACKEND_URL = "https://asque-media-7cug.onrender.com/api/v1";
 const LOCALSTORAGEAUTHKEY = 'asque-login-detail';
 const LOCALSTORAGEUSERID = 'asque-user-id';
 const LOCALSTORAGEACCESSTOKENKEY = 'asque-access-token';
