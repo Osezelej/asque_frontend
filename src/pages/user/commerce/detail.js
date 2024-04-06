@@ -180,7 +180,7 @@ export function Details (){
                     </div>
             </div>
             <div className="page-name-search-section">
-                    <h1>{artDetail.title}</h1>
+                    {/* <h1>{artDetail.title}</h1> */}
             </div>
         </div>}  
 
@@ -202,7 +202,7 @@ export function Details (){
                 </button>
             </div>
             <div className="detail-description">
-                <p>{artDetail.description}</p>
+                <p>{artDetail.description} this is an artwork for sale. lorem ipsun, this is an artwork for sale </p>
             </div>
         </div> }
         {!loadingState && <div className="detail-fact-item-container">

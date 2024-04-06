@@ -85,6 +85,7 @@ export function MarketHome(){
         }).then((value)=>{
             // console.log(value.data.data);
             setTrandingData(value.data.data);
+
             
         }).catch((err)=>{
             console.log(err)
@@ -100,7 +101,7 @@ export function MarketHome(){
             dispatch(resetProfile())
             localStorage.clear()
             navigate('/auth/signin')
-        })
+        }).finally(()=>{setLoadingData(true)})
     }
 
     async function getAlbum(){
@@ -225,7 +226,7 @@ export function MarketHome(){
         </div>
         <div className="home-body-container">
             <div className="trending-artwork-container">
-                <h4>Trending artworks</h4>
+                <h4 style={{fontSize:14}}>Trending artworks</h4>
             </div>
             {loadingdata ? <div style={{   height:'100vh',
                         width:'98vw',
@@ -239,10 +240,10 @@ export function MarketHome(){
             {
                 trendingData.map((value, index)=> <div className="home-image-item-container" key={index}>
                     <div>
-                       {!loadingdata && <img alt=""  src={value.imageUris[0]} height={137} width={125} style={{
+                       {!loadingdata && <img alt=""  src={value.imageUris[0]} height={100.36} width={96.5} style={{
                         borderRadius:6
                        }}/>} 
-                        <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:14, textAlign:'center'}}>view in shop</p>
+                        <p className="active" onClick={()=>navigate('/market/shop')} style={{fontSize:12, textAlign:'center'}}>view in shop</p>
                     </div>
                     {/* <div>
                         <img alt=""  src={trending2}/>
@@ -268,10 +269,10 @@ export function MarketHome(){
                 <div className="home-photo-mainbody">
                     {imagesArray.map((value)=> {
                         return <div className="home-photo-mainbody-item">
-                            {!loadingdata && value.albumImageUris !== undefined && <img style={{borderRadius:7}} src={value.albumImageUris[0]} width={156} height={190} alt='' onClick={()=>{navigate('/collection/album?aid=' + value.id)}}/>}
-                            {!loadingdata && value.albumImageUris === undefined && <img style={{borderRadius:7}} src={value.secondImage} width={156} height={190} alt='' onClick={()=>{navigate('/collection/story/' + value.title + '?sid=' +value.id)}}s/>}
-                            <div className="text-structurecontainer">
-                                <p>{value.title}</p>
+                            {!loadingdata && value.albumImageUris !== undefined && <img style={{borderRadius:7}} src={value.albumImageUris[0]} width={156} height={192} alt='' onClick={()=>{navigate('/collection/album?aid=' + value.id)}}/>}
+                            {!loadingdata && value.albumImageUris === undefined && <img style={{borderRadius:7}} src={value.secondImage} width={156} height={192} alt='' onClick={()=>{navigate('/collection/story/' + value.title + '?sid=' +value.id)}}s/>}
+                            <div className="text-structurecontainer" style={{marginTop:12, marginBottom:12}}>
+                                <p style={{fontSize:12, maxWidth:156}}>{value.title}</p>
                             </div>
                     </div>})}
                 </div>}

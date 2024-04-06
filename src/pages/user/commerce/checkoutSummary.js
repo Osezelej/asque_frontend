@@ -94,7 +94,7 @@ export function CheckoutSummary(){
         }).then((value)=>{
             console.log(value.data.data.redirectUrl)
             setErrorMessage({
-                title:'Successfully ',
+                title:'Successfull ',
                 type:'success',
                 content:'To pay for your order, order ID: #' + orderId,
                 link:value.data.data.redirectUrl,
@@ -142,13 +142,13 @@ export function CheckoutSummary(){
          <div className='address-summary-container'>
          <div className='delivery-address-container'>
                 <p className='title'>Delivery Address</p>
-                <p className='address'>{`${userAddress.addr}, ${userAddress.city}, ${userAddress.country}.`}</p>
+                <p className='address' style={{width:"100%"}}>{`${userAddress.addr}, ${userAddress.city}, ${userAddress.country}.`}</p>
                 <p className='change' onClick={()=>{
                     
                     navigate('/market/pickupLocation')
                 }}>change address</p>
             </div>
-            <div className='summary-container'>
+            <div className='summary-container' style={{marginTop:24, marginBottom:48}}>
                 <h5>Order Summary</h5>
                 <div className='summary-details-container'>
                 {[...cartData, {title:'Tax & fees', price: total + (total * 0.2), itemNum:1}].map((value, index)=>{

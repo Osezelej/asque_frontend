@@ -153,7 +153,11 @@ export function ViewedPublished(){
                         display:'flex',
                         justifyContent:'space-between',
                         flexDirection:'row',
-                        alignItems:'flex-end'
+                        alignItems:'flex-end',
+                        marginBottom:48,
+                        borderBottomWidth:0.5,
+                        borderBottomStyle:'solid',
+                        borderBottomColor:'#c4c4c4ae'
                     }}>
                         {chosenContent.store ? <p  style={{
                                         color:'#BE774C', 
@@ -250,7 +254,7 @@ export function ViewedPublished(){
                     </div>}
                     {
                         imageArray.map((value, index)=>{
-                            return  <div className="artwork-collection-container" style={{marginTop:10, marginBottom:10}}>
+                            return  <div className="artwork-collection-container" style={{marginTop:25, marginBottom:25}}>
                             <div className="artwork-image-container">
                                 {value.imageUris.length > 0 && <img alt="" src={value.imageUris[0]} style={{
                                     width:'100%',
@@ -259,15 +263,15 @@ export function ViewedPublished(){
                                     borderRadius:20
                                 }}/>}
                             </div>
-                            <div className="artwork-text-price-container" style={{display:'flex', justifyContent:'space-between'}}>
+                            <div className="artwork-text-price-container" style={{display:'flex', justifyContent:'space-between', marginTop:12}}>
                                 <div>
                                     <p className="title" style={{fontWeight:'bold'}}>
                                         {value.title}
                                     </p>
-                                    {value.status === 'sold' ? <div style={{color:'#45A14D', display:'flex', columnGap:10, alignItems:'center'}} >
+                                    {value.status === 'sold' ? <div style={{color:'#45A14D', display:'flex', columnGap:10, alignItems:'center', marginTop:6}} >
                                         <div style={{height:4, width:4, borderRadius:10, backgroundColor:'#45A14D'}} ></div>
                                         <p style={{color:'#45A14D'}}>sold out</p>
-                                    </div>: <div style={{color:'#E6A545', display:'flex', columnGap:10, alignItems:'center'}}>
+                                    </div>: <div style={{color:'#E6A545', display:'flex', columnGap:10, alignItems:'center', marginTop:6}}>
                                         <div style={{height:4, width:4, borderRadius:10, backgroundColor:'#E6A545'}}></div>
                                         <p style={{color:'#E6A545'}}>still in stock</p>
                                     </div>}

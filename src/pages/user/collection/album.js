@@ -140,9 +140,12 @@ export function Album(){
             >
                 <ClipLoader color='#BE774C' size={35} />
             </div>:<div style={{overflowY:'scroll', marginBottom:0, height:'100vh'}}>
-                        <div className="collection-main-header">
+                        <div className="collection-main-header" style={{justifyContent:'space-around', marginBottom:48, height:50,
+                        borderBottomWidth:0.5,
+                        borderBottomStyle:'solid',
+                        borderBottomColor:'#c4c4c4ae', paddingBottom:5}}>
                             
-                            <div className="menu-title">
+                            <div className="menu-title" >
                             
                                 {!isStory ? <p onClick={()=>setIsStory(false)} style={{
                                     color:'#BE774C', 
@@ -191,15 +194,15 @@ export function Album(){
                             <p>no Story yet.</p>
 
                         </div>}
-                            {storyContent.map((value)=><div className='stories-item-container ' onClick={()=>{
+                            {storyContent.map((value)=><div className='stories-item-container ' style={{fontSize:12, columnGap:18, marginBottom:12, marginTop:12} } onClick={()=>{
 
                                 navigate('/collection/story/' + value.title + '?sid=' +value.id)
                                 }}>
 
                                 <div className='text-container'>
-                                    <p className='title'>{value.title}</p>
+                                    <p className='title' style={{width:251, fontSize:14}}>{value.title}</p>
                                     
-                                    <p style={{fontSize:14, width:251}}> {value.content.substring(0, 120)}
+                                    <p style={{fontSize:12, width:251}}> {value.content.substring(0, 120)}
                                     {value.content.length > 120 && '...'}</p>
                                     
                                 </div>

@@ -128,7 +128,7 @@ export function Checkout(){
         </div>
         <div className='address-summary-container'>
         {userAddress.addr.length == 0 && <div className='delivery-address-container'>
-                <p className='title'>Enter your delivery Address</p>
+                <p className='title'>Delivery Address</p>
                 {/* <p className='address'>141 Grace street, Lekki, Lagos, Nigeria</p> */}
                 <p className='change' onClick={()=>{
                     navigate('/market/pickupLocation')
@@ -136,14 +136,14 @@ export function Checkout(){
             </div>}
             {userAddress.addr.length > 0 && <div className='delivery-address-container'>
                 <p className='title'>Delivery Address</p>
-                <p className='address'>{`${userAddress.addr}, ${userAddress.city}, ${userAddress.country}.`}</p>
+                <p className='address' style={{minWidth:"100%", marginTop:12, marginBottom:12}}>{`${userAddress.addr}, ${userAddress.city}, ${userAddress.country}.`}</p>
                 <p className='change' onClick={()=>{
                     
                     navigate('/market/pickupLocation')
                 }}>change address</p>
             </div>}
             
-            <div className='summary-container'>
+            <div className='summary-container' style={{marginTop:24, marginBottom:48}}>
                 <h5>Order Summary</h5>
                 <div className='summary-details-container'>
                 {[...cartData, {title:'Tax & fees', price: total + (total * 0.2), itemNum:1}].map((value, index)=><div key={index}>

@@ -199,7 +199,7 @@ export function Shop(){
                         }}>{cartLen}</p>
                     </div>
                 </div>
-                <div className="page-name-search-section">
+                <div className="page-name-search-section" style={{marginBottom:40}}>
                     <h1>Marketplace</h1>
                     {/* <div className='search-icon-name-container'>
                         <SearchRounded style={{
@@ -232,17 +232,15 @@ export function Shop(){
                                     width:'100%',
                                     height:'60%',
                                     display:'flex',
-                                    'justifyContent':'center',
+                                    'justifyContent':'flex-start',
                                     alignItems:'center'
                                 }} onClick={()=>{
                                     // console.log(value.id)
                                     navigate('/market/detail/artwork' + '?pid='+value.id)
                                     
                                     }}>
-                                <img src={value.imageUris[0]} alt='' style={{
+                                <img src={value.imageUris[0]} width={150} height={157} alt='' style={{
                                     objectFit:'contain',
-                                    height:'100%',
-                                    width:'80%',
                                     alignSelf:'center'
                                 }}/>
             </div>

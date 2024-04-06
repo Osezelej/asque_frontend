@@ -41,7 +41,7 @@ export function ErrorDialogComp ({content, contentKeyword, title, commands, type
                 justifyContent:'center',
                 columnGap:15
             }}>
-                <h3>{title}</h3>
+                <h3 style={{marginBottom:12}}>{title}</h3>
                 <p style={{
                     textAlign:'center',
                     marginLeft:15,
@@ -56,7 +56,8 @@ export function ErrorDialogComp ({content, contentKeyword, title, commands, type
                 width:'100%',
                 height:60,
                 alignItems:'center',
-                fontWeight:900
+                fontWeight:900,
+                marginTop:14
                 }}>
                
                 {commands.map((value)=><div className='modal-action-button' key={value}>

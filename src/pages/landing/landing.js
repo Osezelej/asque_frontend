@@ -1,5 +1,5 @@
 import Carousel from 'react-material-ui-carousel';
-import Africa from '../../assets/asqueAfrica.jpg';
+import Africa from '../../assets/africa 1.png';
 import image1 from '../../assets/image1.png';
 import image2 from '../../assets/image2.png';
 import image3 from '../../assets/image3.png';
@@ -25,19 +25,19 @@ export function Home(){
         },
         {
             image:landing2,
-            preTagline:'Conveniently',
+            preTagline:'',
             tagline:'Shop',
             taglineDesc:"Discover and shop the best of African art from a repository of premium sculptures, canvas paintings, photographs, and more"
         },
         {
             image:landing3,
-            preTagline:'We create opportunities for you to',
+            preTagline:'',
             tagline:'Earn',
             taglineDesc:"Earn attractive commissions while at it by inviting friends and family to the experience"
         },
         {
             image:landing4,
-            preTagline:'And access',
+            preTagline:'',
             tagline:'Community',
             taglineDesc:"Connect with a community of fellow Africa enthusiasts"
         }
@@ -70,12 +70,12 @@ export function Home(){
                     justifyContent:'center',
                     alignItems:'center'
                 }}>
-                    <div className="landing-header-image-signin-signup-container" style={{width:'100%', backgroundColor:'white'}}>
+                    <div className="landing-header-image-signin-signup-container" style={{width:'100%', backgroundColor:'#F2F2F2', marginTop:24, marginLeft:20, marginRight:20}}>
                         <div className="header-image-container">
-                            <img src={Africa} height={100} width={100} alt='africa'/>
+                            <img src={Africa} alt='africa'/>
                         </div>
                         <div className='auth-button-container' >
-                            <button className='auth-outline-button' onClick={()=>navigate('/auth/signin')}>
+                            <button className='auth-outline-button' style={{backgroundColor:'transparent'}} onClick={()=>navigate('/auth/signin')}>
                                 Sign in
                             </button>
                             <button className='auth-filled-button' onClick={()=>navigate('/auth/signup-as')}>
@@ -84,43 +84,44 @@ export function Home(){
                         </div>
                     </div>
                 </div>
-                <div className='landing-hero-section'>
+                <div className='landing-hero-section' style={{marginTop:40}}>
                     <div className='company-name-desc-container'>
-                        {/* <h1 className='dm-serif'><display-regular>ASQUE</display-regular> </h1> */}
+                        <h1 className='dm-serif'><display-regular>ASQUE</display-regular> </h1>
                         <p >Discover, explore and interact with africa's cultural, social, and societal landscape</p>
                     </div>
-                    <div className='header-carousel-container'>
+                    <div className='header-carousel-container' style={{marginBottom:100}}>
                         <Carousel animation='slide' >
                             { imageArray.map((value)=><div className='header-carousel-image-container'>
                                 <img src={image4} alt='carousel1' width={180} height={180}/>
                                 <img src={image3} alt='carousel2' width={180} height={180}/>
                             </div>)}
-                        </Carousel>
+                        </Carousel> 
                     </div>
                 </div>
                 <div className='landing-main-content-container'>
                     {
                         landingArray.map((value, key)=><div className='landing-content-container' key={key} style={{
                             marginTop:50,
-                            marginBottom:130
+                            marginBottom:150
                         }}>
+                            
+                            <div className='preTagline-tagline-tagline-desc-container' style={{marginBottom:40}}>
+                            {value.preTagline.length > 0  && <div className='preTagline-container'>
+                                     <p>{value.preTagline}</p>
+                                </div>}
+                                <div className='tagline-title' >
+                                    <p>{value.tagline}</p>
+                                </div>
+                                <div className='tagline-desc'>
+                                    <p>{value.taglineDesc}</p>
+                                </div>
+                            </div>
                             <div className='landing-image-container' style={{
                                 width:'100%',
                                 display:'flex',
                                 justifyContent:'center'
                             }}>
                                 <img src={value.image} alt=''/>
-                            </div>
-                            <div className='preTagline-tagline-tagline-desc-container'>
-                                <div className='preTagline-container'>
-                                    <p>{value.preTagline}</p>
-                                </div>
-                                <div className='tagline-title'>
-                                    <p>{value.tagline}</p>
-                                </div>
-                                <div className='tagline-desc'>
-                                    <p>{value.taglineDesc}</p>
-                                </div>
                             </div>
                         </div>)
                     }
